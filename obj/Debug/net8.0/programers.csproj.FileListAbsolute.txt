@@ -1,0 +1,14 @@
+/Users/seonjihoon/workspace/programers/bin/Debug/net8.0/programers
+/Users/seonjihoon/workspace/programers/bin/Debug/net8.0/programers.deps.json
+/Users/seonjihoon/workspace/programers/bin/Debug/net8.0/programers.runtimeconfig.json
+/Users/seonjihoon/workspace/programers/bin/Debug/net8.0/programers.dll
+/Users/seonjihoon/workspace/programers/bin/Debug/net8.0/programers.pdb
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.GeneratedMSBuildEditorConfig.editorconfig
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.AssemblyInfoInputs.cache
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.AssemblyInfo.cs
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.csproj.CoreCompileInputs.cache
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.dll
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/refint/programers.dll
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.pdb
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.genruntimeconfig.cache
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/ref/programers.dll
