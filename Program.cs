@@ -7,7 +7,7 @@ class Program
     static void Main(string[] args)
     {
         Programers_Level_0 p0 = new Programers_Level_0();
-        int v = p0.s181864("ABBAA", "AABB");
+        p0.s181873("programmers", "p");
 
         // PrintArray(v);
         // Console.ReadLine();

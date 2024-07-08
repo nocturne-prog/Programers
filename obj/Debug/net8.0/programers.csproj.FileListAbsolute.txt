@@ -12,3 +12,4 @@
 /Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.pdb
 /Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.genruntimeconfig.cache
 /Users/seonjihoon/workspace/programers/obj/Debug/net8.0/ref/programers.dll
+/Users/seonjihoon/workspace/programers/obj/Debug/net8.0/programers.sourcelink.json

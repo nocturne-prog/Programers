@@ -1,3 +1,6 @@
+using System.Formats.Asn1;
+using System.Text;
+
 public class Programers_Level_0
 {
     //https://school.programmers.co.kr/learn/courses/30/lessons/181835
@@ -175,8 +178,292 @@ public class Programers_Level_0
     //https://school.programmers.co.kr/learn/courses/30/lessons/181868
     public string[] s181868(string my_string)
     {
-        string[] answer = new string[] { };
+        string[] answer = my_string.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
         return answer;
     }
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181869
+    public string[] s181869(string my_string)
+    {
+        string[] answer = my_string.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181870
+    public string[] s181870(string[] strArr)
+    {
+        string[] answer = strArr.Where(x => x.Contains("ad") == false).ToArray();
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181873
+    public string s181873(string my_string, string alp)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            if (my_string[i].ToString().Equals(alp))
+            {
+                sb.Append(char.ToUpper(my_string[i]));
+            }
+            else
+            {
+                sb.Append(my_string[i]);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181874
+    public string s181874(string myString)
+    {
+        return myString.ToLower().Replace("a", "A");
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181875
+    public string[] s181875(string[] strArr)
+    {
+        string[] answer = new string[strArr.Length];
+
+        for (int i = 0; i < answer.Length; i++)
+        {
+            bool evenNumber = i % 2 == 0;
+            answer[i] = evenNumber ? strArr[i].ToLower() : strArr[i].ToUpper();
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181876
+    public string s181876(string myString)
+    {
+        return myString.ToLower();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181877
+    public string s181877(string myString)
+    {
+        return myString.ToUpper();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181950
+    public void s181950(string myString)
+    {
+        String[] input;
+
+        Console.Clear();
+        input = Console.ReadLine().Split(' ');
+
+        String s1 = input[0];
+        int a = Int32.Parse(input[1]);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < a; i++)
+        {
+            sb.Append(s1);
+        }
+
+        Console.WriteLine(sb.ToString());
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181949
+    public void s181949()
+    {
+        String s;
+
+        Console.Clear();
+        s = Console.ReadLine();
+
+        StringBuilder sb = new StringBuilder();
+        foreach (char c in s)
+        {
+            if (char.IsUpper(c))
+            {
+                sb.Append(char.ToLower(c));
+            }
+            else
+            {
+                sb.Append(char.ToUpper(c));
+            }
+        }
+
+        Console.WriteLine(sb.ToString());
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181948
+    public void s181948()
+    {
+        Console.WriteLine("!@#$%^&*(\\'\"<>?:;");
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181943
+    public string s181943(string my_string, string overwrite_string, int s)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            if (i == s)
+            {
+                for (int m = 0; m < overwrite_string.Length; m++)
+                {
+                    sb.Append(overwrite_string[m]);
+                    i++;
+                }
+
+                i--;
+            }
+            else
+            {
+                sb.Append(my_string[i]);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181942
+    public string s181942(string str1, string str2)
+    {
+        StringBuilder sb = new StringBuilder();
+        int count = str1.Length;
+
+        for (int i = 0; i < count; i++)
+        {
+            sb.Append(str1[i]);
+            sb.Append(str2[i]);
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181941
+    public string s181941(string[] arr)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        foreach (string str in arr)
+        {
+            sb.Append(str);
+        }
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181940
+    public string s181940(string my_string, int k)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < k; i++)
+        {
+            sb.Append(my_string);
+        }
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181939
+    public int s181939(int a, int b)
+    {
+        int ab = int.Parse($"{a}{b}");
+        int ba = int.Parse($"{b}{a}");
+
+        return Math.Max(ab, ba);
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181938
+    public int s181938(int a, int b)
+    {
+        int result1 = int.Parse($"{a}{b}");
+        int result2 = 2 * a * b;
+        return Math.Max(result1, result2);
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181937
+    public int s181937(int num, int n)
+    {
+        return num % n == 0 ? 1 : 0;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181936
+    public int s181936(int number, int n, int m)
+    {
+        // n과 m의 최소공배수를 구해서 계산해도 가능
+        return number % n == 0 && number % m == 0 ? 1 : 0;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181935
+    public int s181935(int n)
+    {
+        bool isEvenNumber = n % 2 == 0;
+
+        if (isEvenNumber == true)
+        {
+            int answer = 0;
+            for (int i = 2; i <= n; i += 2)
+            {
+                answer += (i * i);
+            }
+
+            return answer;
+        }
+        else
+        {
+            int answer = 0;
+            for (int i = 1; i <= n; i += 2)
+            {
+                answer += i;
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181934
+    public int s181934(string ineq, string eq, int n, int m)
+    {
+        bool leftArrow = ineq.Equals("<");
+        bool isEquals = eq.Equals("=");
+
+        if (isEquals == true)
+        {
+            bool answer = leftArrow == true ? n <= m : n >= m;
+            return answer ? 1 : 0;
+        }
+        else
+        {
+            bool answer = leftArrow == true ? n < m : n > m;
+            return answer ? 1 : 0;
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181933
+    public int s181933(int a, int b, bool flag)
+    {
+        return flag ? a + b : a - b;
+    }
 }
