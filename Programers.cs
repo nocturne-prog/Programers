@@ -1,5 +1,8 @@
-using System.Formats.Asn1;
 using System.Text;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class Programers_Level_0
 {
@@ -262,7 +265,9 @@ public class Programers_Level_0
         String[] input;
 
         Console.Clear();
+#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
         input = Console.ReadLine().Split(' ');
+#pragma warning restore CS8602 // null 가능 참조에 대한 역참조입니다.
 
         String s1 = input[0];
         int a = Int32.Parse(input[1]);
@@ -284,9 +289,12 @@ public class Programers_Level_0
         String s;
 
         Console.Clear();
+#pragma warning disable CS8600 // null 리터럴 또는 가능한 null 값을 null을 허용하지 않는 형식으로 변환하는 중입니다.
         s = Console.ReadLine();
+#pragma warning restore CS8600 // null 리터럴 또는 가능한 null 값을 null을 허용하지 않는 형식으로 변환하는 중입니다.
 
         StringBuilder sb = new StringBuilder();
+#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
         foreach (char c in s)
         {
             if (char.IsUpper(c))
@@ -298,6 +306,7 @@ public class Programers_Level_0
                 sb.Append(char.ToUpper(c));
             }
         }
+#pragma warning restore CS8602 // null 가능 참조에 대한 역참조입니다.
 
         Console.WriteLine(sb.ToString());
     }
@@ -466,4 +475,242 @@ public class Programers_Level_0
     {
         return flag ? a + b : a - b;
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181931
+    public int s181931(int a, int d, bool[] included)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < included.Length; i++)
+        {
+            answer += included[i] ? a + (i * d) : 0;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181930
+    public int s181930(int a, int b, int c)
+    {
+        int sum1 = a + b + c;
+        int sum2 = a * a + b * b + c * c;
+        int sum3 = a * a * a + b * b * b + c * c * c;
+
+        if (a == b && a == c)
+        {
+            return sum1 * sum2 * sum3;
+        }
+        else if (a == b || b == c || a == c)
+        {
+            return sum1 * sum2;
+        }
+        else
+        {
+            return sum1;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181929
+    public int s181929(int[] num_list)
+    {
+        int a = num_list.Sum() * num_list.Sum();
+        int b = num_list.Aggregate(1, (acc, x) => acc * x);
+
+        return b < a ? 1 : 0;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181928
+    public int s181928(int[] num_list)
+    {
+        string odd = "";
+        string even = "";
+
+        for (int i = 0; i < num_list.Length; i++)
+        {
+            bool isEvenNumber = num_list[i] % 2 == 0;
+
+            if (isEvenNumber == true)
+            {
+                even += num_list[i];
+            }
+            else
+            {
+                odd += num_list[i];
+            }
+        }
+
+        return int.Parse(odd) + int.Parse(even);
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181927
+    public int[] s181927(int[] num_list)
+    {
+        int a = num_list[num_list.Length - 1];
+        int b = num_list[num_list.Length - 2];
+        int addValue = 0;
+
+        if (a > b)
+        {
+            addValue = a - b;
+        }
+        else
+        {
+            addValue = a * 2;
+        }
+
+        return num_list.Append(addValue).ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181926
+    public int s181926(int n, string control)
+    {
+        for (int i = 0; i < control.Length; i++)
+        {
+            char command = control[i];
+
+            if (command.Equals('w'))
+            {
+                n++;
+            }
+            else if (command.Equals('s'))
+            {
+                n--;
+            }
+            else if (command.Equals('d'))
+            {
+                n += 10;
+            }
+            else if (command.Equals('a'))
+            {
+                n -= 10;
+            }
+        }
+
+        return n;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181925
+    public string s181925(int[] numLog)
+    {
+        string answer = "";
+
+        for (int i = 1; i < numLog.Length; i++)
+        {
+            int result = numLog[i];
+            int prev = numLog[i - 1];
+
+            int v = result - prev;
+
+            if (v == 1)
+            {
+                answer += "w";
+            }
+            else if (v == -1)
+            {
+                answer += "s";
+            }
+            else if (v == 10)
+            {
+                answer += "d";
+            }
+            else if (v == -10)
+            {
+                answer += "a";
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181924
+    public int[] s181924(int[] arr, int[,] queries)
+    {
+        for (int i = 0; i < queries.GetLength(0); i++)
+        {
+            int a = queries[i, 0];
+            int b = queries[i, 1];
+
+            int aValue = arr[a];
+            int bValue = arr[b];
+
+            arr[a] = bValue;
+            arr[b] = aValue;
+        }
+
+        return arr;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181923
+    public int[] s181923(int[] arr, int[,] queries)
+    {
+        int[] answer = new int[queries.GetLength(0)];
+
+        for (int i = 0; i < queries.GetLength(0); i++)
+        {
+            int a = queries[i, 0];
+            int b = queries[i, 1];
+            int c = queries[i, 2];
+
+            List<int> valueList = new List<int>();
+
+            for (int m = 0; m <= arr.Length; m++)
+            {
+                if (a <= m && m <= b)
+                {
+                    int value = arr[m];
+                    if (c < value)
+                    {
+                        valueList.Add(value);
+                    }
+                }
+            }
+
+            if (valueList.Count == 0)
+            {
+                answer[i] = -1;
+            }
+            else
+            {
+                answer[i] = valueList.Min();
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181922
+    public int[] s181922(int[] arr, int[,] queries)
+    {
+        for (int i = 0; i < queries.GetLength(0); i++)
+        {
+            int a = queries[i, 0];
+            int b = queries[i, 1];
+            int c = queries[i, 2];
+
+            for (int m = 0; m < arr.Length; m++)
+            {
+                if (a <= m && m <= b)
+                {
+                    if (m == 0 || m % c == 0)
+                    {
+                        arr[m]++;
+                    }
+                }
+            }
+        }
+
+        return arr;
+    }
+
 }
