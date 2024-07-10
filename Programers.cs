@@ -713,4 +713,371 @@ public class Programers_Level_0
         return arr;
     }
 
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181921
+    public int[] s181921(int l, int r)
+    {
+        List<int> result = new List<int>();
+
+        for (int i = l; i <= r; i++)
+        {
+            string value = i.ToString();
+            if (value.All(x => char.Equals(x, '0') || char.Equals(x, '5')))
+            {
+                result.Add(i);
+            }
+        }
+
+        if (result.Count == 0)
+        {
+            return new int[] { -1 };
+        }
+        else
+        {
+            return result.ToArray();
+        }
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181920
+    public int[] s181920(int start_num, int end_num)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = start_num; i <= end_num; i++)
+        {
+            answer.Add(i);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181919
+    public int[] s181919(int n)
+    {
+        List<int> answer = new List<int>();
+        answer.Add(n);
+
+        while (n != 1)
+        {
+            bool isEvenNumber = n % 2 == 0;
+
+            if (isEvenNumber == true)
+            {
+                n /= 2;
+            }
+            else
+            {
+                n = 3 * n + 1;
+            }
+
+            answer.Add(n);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181918
+    public int[] s181918(int[] arr)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            int value = arr[i];
+
+            if (answer.Count == 0)
+            {
+                answer.Add(value);
+            }
+            else if (answer.Last() < value)
+            {
+                answer.Add(value);
+            }
+            else
+            {
+                answer.RemoveAt(answer.Count - 1);
+                i--;
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181917
+    public bool s181917(bool x1, bool x2, bool x3, bool x4)
+    {
+        return (x1 || x2) && (x3 || x4);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181916
+    public int s181916(int a, int b, int c, int d)
+    {
+        Dictionary<int, int> counter = new Dictionary<int, int>();
+        int[] dices = new int[] { a, b, c, d };
+
+        for (int i = 0; i < dices.Length; i++)
+        {
+            if (counter.ContainsKey(dices[i]))
+            {
+                counter[dices[i]]++;
+            }
+            else
+            {
+                counter.Add(dices[i], 1);
+            }
+        }
+
+        bool isFour = counter.Values.Any(x => x == 4);
+        bool isThree = counter.Values.Any(x => x == 3);
+        bool isTwo = counter.Values.Any(x => x == 2);
+
+        if (isFour)
+        {
+            return 1111 * counter.Keys.ToList()[0];
+        }
+        else if (isThree)
+        {
+            var max = counter
+                        .Where(x => x.Value == 3)
+                        .Select(x => x.Key).ToList()[0];
+
+            var min = counter
+                        .Where(x => x.Value == 1)
+                        .Select(x => x.Key).ToList()[0];
+
+            return (int)Math.Pow(10 * max + min, 2);
+        }
+        else if (isTwo)
+        {
+            bool isDouble = counter
+                                .Where(x => x.Value == 2)
+                                .Select(x => x.Key).ToList().Count > 1;
+
+            if (isDouble)
+            {
+                var keyList = counter.Keys.ToList();
+                return (keyList[0] + keyList[1]) * Math.Abs(keyList[0] - keyList[1]);
+            }
+            else
+            {
+                var keyList = counter
+                                .Where(x => x.Value != 2)
+                                .Select(x => x.Key).ToList();
+
+                return keyList[0] * keyList[1];
+            }
+        }
+        else
+        {
+            return counter.Keys.ToList().Min();
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181915
+    public string s181915(string my_string, int[] index_list)
+    {
+        string answer = "";
+
+        for (int i = 0; i < index_list.Length; i++)
+        {
+            answer += my_string[index_list[i]];
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181914
+    public int s181914(string number)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < number.Length; i++)
+        {
+            answer += number[i] - '0';
+        }
+
+        return answer % 9;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181913
+    public string s181913(string my_string, int[,] queries)
+    {
+        List<int> list = new List<int>();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            list.Add(i);
+        }
+
+        for (int i = 0; i < queries.GetLength(0); i++)
+        {
+            int startIdx = queries[i, 0];
+            int endIdx = queries[i, 1];
+
+            List<int> reverseList = new List<int>();
+            for (int m = startIdx; m <= endIdx; m++)
+            {
+                reverseList.Add(list[m]);
+            }
+            reverseList.Reverse();
+
+            list.RemoveRange(startIdx, endIdx - startIdx + 1);
+            list.InsertRange(startIdx, reverseList);
+        }
+
+        string answer = "";
+        for (int i = 0; i < list.Count; i++)
+        {
+            answer += my_string[list[i]];
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181912
+    public int[] s181912(string[] intStrs, int k, int s, int l)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < intStrs.Length; i++)
+        {
+            int value = int.Parse(intStrs[i].Substring(s, l));
+
+            if (value > k)
+                answer.Add(value);
+        }
+
+        return answer.ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181911
+    public string s181911(string[] my_strings, int[,] parts)
+    {
+        string answer = "";
+
+        for (int i = 0; i < my_strings.Length; i++)
+        {
+            int startIdx = parts[i, 0];
+            int count = parts[i, 1];
+
+            answer += my_strings[i].Substring(startIdx, count - startIdx + 1);
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181910
+    public string s181910(string my_string, int n)
+    {
+        int removeCount = my_string.Length - n;
+
+        return my_string.Remove(0, removeCount);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181909
+    public string[] s181909(string my_string)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i <= my_string.Length; i++)
+        {
+            int removeCount = my_string.Length - i;
+            string value = my_string.Remove(0, removeCount);
+
+            if (string.IsNullOrEmpty(value) == false)
+            {
+                answer.Add(value);
+            }
+        }
+
+        return answer.OrderBy(x => x).ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181908
+    public int s181908(string my_string, string is_suffix)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i <= my_string.Length; i++)
+        {
+            int removeCount = my_string.Length - i;
+            string value = my_string.Remove(0, removeCount);
+
+            if (string.IsNullOrEmpty(value) == false)
+            {
+                answer.Add(value);
+            }
+        }
+
+        return answer.Contains(is_suffix) ? 1 : 0;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181907
+    public string s181907(string my_string, int n)
+    {
+        return my_string.Substring(0, n);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181906
+    public int s181906(string my_string, string is_prefix)
+    {
+        int count = my_string.Length;
+        List<string> list = new List<string>();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            string value = my_string.Substring(0, i);
+
+            if (string.IsNullOrEmpty(value) == false)
+            {
+                list.Add(value);
+            }
+        }
+
+        return list.Contains(is_prefix) == true ? 1 : 0;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181905
+    public string s181905(string my_string, int s, int e)
+    {
+        string answer = "";
+        string targetString = my_string.Substring(s, e);
+        string reverse = new string(targetString.Reverse().ToArray());
+
+        answer = my_string.Remove(s, e).Insert(s, reverse);
+        return answer;
+    }
+
 }
