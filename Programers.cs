@@ -1073,11 +1073,101 @@ public class Programers_Level_0
     public string s181905(string my_string, int s, int e)
     {
         string answer = "";
-        string targetString = my_string.Substring(s, e);
+        string targetString = my_string.Substring(s, e - s + 1);
         string reverse = new string(targetString.Reverse().ToArray());
-
-        answer = my_string.Remove(s, e).Insert(s, reverse);
+        answer = my_string.Remove(s, e - s + 1).Insert(s, reverse);
         return answer;
     }
 
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181904
+    public string s181904(string my_string, int m, int c)
+    {
+        int count = my_string.Length / m;
+        string answer = "";
+        for (int i = 0; i < count; i++)
+        {
+            answer += my_string[i * m + c - 1];
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181903
+    public string s181903(int q, int r, string code)
+    {
+        string answer = "";
+
+        for (int i = 0; i < code.Length; i++)
+        {
+            if (i % q == r)
+                answer += code[i];
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181902
+    public int[] s181902(string my_string)
+    {
+        int[] answer = new int[52];
+
+        foreach (char c in my_string)
+        {
+            //인덱스 0부터 25는 대문자 ‘A’부터 ‘Z’까지의 개수를 저장.
+            //인덱스 26부터 51은 소문자 ‘a’부터 ‘z’까지의 개수를 저장.
+            if (c >= 'A' && c <= 'Z')
+            {
+                answer[c - 'A']++;
+            }
+            else if (c >= 'a' && c <= 'z')
+            {
+                answer[c - 'a' + 26]++;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181901
+    public int[] s181901(int n, int k)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = k; i <= n; i++)
+        {
+            if (i % k == 0)
+                answer.Add(i);
+        }
+
+        return answer.ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181900
+    public string s181900(string my_string, int[] indices)
+    {
+        Array.Sort(indices);
+        string answer = "";
+
+        int indicesIdx = 0;
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            if (indicesIdx < indices.Length && i == indices[indicesIdx])
+            {
+                indicesIdx++;
+                continue;
+            }
+
+            answer += my_string[i];
+        }
+
+        return answer;
+    }
 }
