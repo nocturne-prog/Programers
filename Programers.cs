@@ -1170,4 +1170,437 @@ public class Programers_Level_0
 
         return answer;
     }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181899
+    public int[] s181899(int start_num, int end_num)
+    {
+        List<int> answer = new List<int>();
+        int count = start_num - end_num + 1;
+        int startNumber = start_num;
+
+        for (int i = 0; i < count; i++)
+        {
+            answer.Add(startNumber--);
+        }
+
+        return answer.ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181898
+    public int s181898(int[] arr, int idx)
+    {
+        if (arr[idx] == 1)
+        {
+            return idx;
+        }
+
+        for (int i = idx; i < arr.Length; i++)
+        {
+            if (arr[i] > 0)
+                return i;
+        }
+
+        return -1;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181897
+    public int[] s181897(int n, int[] slicer, int[] num_list)
+    {
+        List<int> answer = new List<int>();
+        int a = slicer[0];
+        int b = slicer[1];
+        int c = slicer[2];
+
+        if (n == 1)
+        {
+            for (int i = 0; i <= b; i++)
+            {
+                answer.Add(num_list[i]);
+            }
+        }
+        else if (n == 2)
+        {
+            for (int i = a; i < num_list.Length; i++)
+            {
+                answer.Add(num_list[i]);
+            }
+        }
+        else if (n == 3)
+        {
+            for (int i = a; i <= b; i++)
+            {
+                answer.Add(num_list[i]);
+            }
+        }
+        else
+        {
+            for (int i = a; i <= b; i += c)
+            {
+                answer.Add(num_list[i]);
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181896
+    public int s181896(int[] num_list)
+    {
+        for (int i = 0; i < num_list.Length; i++)
+        {
+            if (num_list[i] < 0)
+                return i;
+        }
+
+        return -1;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181895
+    public int[] s181895(int[] arr, int[,] intervals)
+    {
+        List<int> answer = new List<int>();
+
+        int a1 = intervals[0, 0];
+        int b1 = intervals[0, 1];
+        int a2 = intervals[1, 0];
+        int b2 = intervals[1, 1];
+
+        for (int i = a1; i <= b1; i++)
+        {
+            answer.Add(arr[i]);
+        }
+
+        for (int i = a2; i <= b2; i++)
+        {
+            answer.Add(arr[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181894
+    public int[] s181894(int[] arr)
+    {
+        var indexArr = arr
+                        .Select((value, index) => new { value, index })
+                        .Where(x => x.value == 2)
+                        .Select(x => x.index)
+                        .ToList();
+
+        if (indexArr.Count == 0)
+            return new int[] { -1 };
+
+        int min = indexArr.Min();
+        int max = indexArr.Max();
+
+        List<int> answer = new List<int>();
+
+        for (int i = min; i <= max; i++)
+        {
+            answer.Add(arr[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181893
+    public int[] s181893(int[] arr, int[] query)
+    {
+        List<int> answer = new List<int>(arr);
+
+        for (int i = 0; i < query.Length; i++)
+        {
+            int idx = query[i];
+            bool isEvenNumber = i % 2 == 0;
+
+            if (isEvenNumber == true)
+            {
+                int count = answer.Count - idx - 1;
+                answer.RemoveRange(idx + 1, count);
+            }
+            else
+            {
+                int count = idx;
+                answer.RemoveRange(0, count);
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181892
+    public int[] s181892(int[] num_list, int n)
+    {
+        List<int> answer = new List<int>(num_list);
+        answer.RemoveRange(0, n - 1);
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181891
+    public int[] s181891(int[] num_list, int n)
+    {
+        List<int> answer = new List<int>(num_list);
+
+        for (int i = 0; i < n; i++)
+        {
+            int value = answer[0];
+            answer.RemoveAt(0);
+            answer.Add(value);
+        }
+
+        return answer.ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181890
+    public string[] s181890(string[] str_list)
+    {
+        int idx = -1;
+        bool isLeft = false;
+        List<string> answer = new List<string>(str_list);
+
+        for (int i = 0; i < str_list.Length; i++)
+        {
+            if (str_list[i].Equals("l"))
+            {
+                idx = i;
+                isLeft = true;
+                break;
+            }
+
+            if (str_list[i].Equals("r"))
+            {
+                idx = i;
+                isLeft = false;
+                break;
+            }
+        }
+
+        if (idx != -1)
+        {
+            if (isLeft == true)
+            {
+                answer.RemoveRange(idx, answer.Count - idx);
+            }
+            else
+            {
+                answer.RemoveRange(0, idx + 1);
+            }
+
+            return answer.ToArray();
+        }
+        else
+        {
+            return new string[] { };
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181889
+    public int[] s181889(int[] num_list, int n)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < n; i++)
+        {
+            answer.Add(num_list[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181888
+    public int[] s181888(int[] num_list, int n)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < num_list.Length; i += n)
+        {
+            answer.Add(num_list[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181887
+    public int s181887(int[] num_list)
+    {
+        bool isEvenNumber = false;
+        int[] sum = new int[] { 0, 0 };
+        for (int i = 0; i < num_list.Length; i++)
+        {
+            if (isEvenNumber == true)
+            {
+                sum[1] += num_list[i];
+            }
+            else
+            {
+                sum[0] += num_list[i];
+            }
+
+            isEvenNumber = !isEvenNumber;
+        }
+
+        return sum.Max();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181886
+    public string[] solution(string[] names)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i < names.Length; i += 5)
+        {
+            answer.Add(names[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181885
+    public string[] solution(string[] todo_list, bool[] finished)
+    {
+        var answer = todo_list
+                        .Select((value, index) => new { value, index })
+                        .Where(x => finished[x.index] == false)
+                        .Select(x => x.value)
+                        .ToArray();
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181884
+    public int s181884(int[] numbers, int n)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            answer += numbers[i];
+
+            if (answer > n)
+                return answer;
+        }
+
+        return 0;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181883
+    public int[] s181883(int[] arr, int[,] queries)
+    {
+        for (int i = 0; i < queries.GetLength(0); i++)
+        {
+            int a = queries[i, 0];
+            int b = queries[i, 1];
+
+            for (int m = a; m <= b; m++)
+            {
+                arr[m]++;
+            }
+        }
+
+        return arr;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181882
+    public int[] s181882(int[] arr)
+    {
+        int[] answer = new int[arr.Length];
+
+        for (int i = 0; i < answer.Length; i++)
+        {
+            int value = arr[i];
+
+            bool isEvenNumber = value % 2 == 0;
+            bool isOver50 = value >= 50;
+
+            if (isOver50 == true && isEvenNumber == true)
+            {
+                answer[i] = value / 2;
+            }
+            else if (isOver50 == false && isEvenNumber == false)
+            {
+                answer[i] = value * 2;
+            }
+            else
+            {
+                answer[i] = arr[i];
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181881
+    public int s181881(int[] arr)
+    {
+        int count = 0;
+
+        while (true)
+        {
+            int changedCount = 0;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                int value = arr[i];
+
+                bool isEvenNumber = value % 2 == 0;
+                bool isOver50 = value >= 50;
+
+                if (isOver50 == true && isEvenNumber == true)
+                {
+                    arr[i] = value / 2;
+                    changedCount++;
+                }
+                else if (isOver50 == false && isEvenNumber == false)
+                {
+                    arr[i] = (value * 2) + 1;
+                    changedCount++;
+                }
+            }
+
+            if (changedCount == 0)
+                break;
+
+            count++;
+        }
+
+        return count;
+    }
 }
