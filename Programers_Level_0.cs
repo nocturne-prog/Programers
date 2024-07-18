@@ -1631,7 +1631,212 @@ public class Programers_Level_0
     //https://school.programmers.co.kr/learn/courses/30/lessons/181879
     public int solution(int[] num_list)
     {
+        if (num_list.Length >= 11)
+        {
+            return num_list.Sum();
+        }
+        else
+        {
+            return num_list.Aggregate(1, (acc, val) => acc * val);
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181878
+    public int s181878(string myString, string pat)
+    {
+        return myString.ToLower().Contains(pat.ToLower()) ? 1 : 0;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181872
+    public string s181872(string myString, string pat)
+    {
+        int idx = myString.LastIndexOf(pat);
+        return myString.Substring(0, idx + pat.Length);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181871
+    public int s181871(string myString, string pat)
+    {
         int answer = 0;
+
+        for (int i = 0; i <= myString.Length - pat.Length; i++)
+        {
+            string value = myString.Substring(i, pat.Length);
+
+            if (value.Equals(pat))
+            {
+                answer++;
+            }
+        }
+
         return answer;
     }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181867
+    public int[] s181867(string myString)
+    {
+        string[] split = myString.Split('x');
+        return split.Select(x => x.Length).ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181866
+    public string[] s181866(string myString)
+    {
+        return myString.Split('x')
+                            .Where(x => string.IsNullOrEmpty(x) == false)
+                            .OrderBy(x => x)
+                            .ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181932
+    public string s181932(string code)
+    {
+        StringBuilder ret = new StringBuilder();
+        int mode = 0;
+
+        for (int idx = 0; idx < code.Length; idx++)
+        {
+            if (code[idx] == '1')
+            {
+                mode = 1 - mode; // mode 전환
+            }
+            else
+            {
+                if (mode == 0 && idx % 2 == 0)
+                {
+                    ret.Append(code[idx]);
+                }
+                else if (mode == 1 && idx % 2 == 1)
+                {
+                    ret.Append(code[idx]);
+                }
+            }
+        }
+
+        return ret.Length > 0 ? ret.ToString() : "EMPTY";
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181865
+    public int s181865(string binomial)
+    {
+        if (binomial.Contains("+"))
+        {
+            string[] split = binomial.Split("+");
+            return int.Parse(split[0]) + int.Parse(split[1]);
+        }
+        else if (binomial.Contains("-"))
+        {
+            string[] split = binomial.Split("-");
+            return int.Parse(split[0]) - int.Parse(split[1]);
+        }
+        else
+        {
+            string[] split = binomial.Split("*");
+            return int.Parse(split[0]) * int.Parse(split[1]);
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181862
+    public string[] s181862(string myStr)
+    {
+        string[] answer = myStr.Split('a', 'b', 'c').Where(x => string.IsNullOrEmpty(x) == false).ToArray();
+
+        return answer.Length > 0 ? answer : new string[] { "EMPTY" };
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181860
+    public int[] s181860(int[] arr, bool[] flag)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < flag.Length; i++)
+        {
+            if (flag[i] == true)
+            {
+                IEnumerable<int> items = Enumerable.Repeat(arr[i], arr[i] * 2);
+                answer.AddRange(items);
+            }
+            else
+            {
+                answer.RemoveRange(answer.Count - arr[i], arr[i]);
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181859
+    public int[] s181859(int[] arr)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            int value = arr[i];
+
+            if (answer.Count == 0)
+            {
+                answer.Add(value);
+            }
+            else
+            {
+                if (answer.Last() == value)
+                {
+                    answer.RemoveAt(answer.Count - 1);
+                }
+                else
+                {
+                    answer.Add(value);
+                }
+            }
+        }
+
+        if (answer.Count == 0)
+            return new int[] { -1 };
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181858
+    public int[] s181858(int[] arr, int k)
+    {
+        HashSet<int> uniqueElements = new HashSet<int>(arr);
+        List<int> answer = new List<int>(uniqueElements);
+
+        if (answer.Count > k)
+        {
+            answer.RemoveRange(k, answer.Count - k);
+        }
+        else if (answer.Count < k)
+        {
+            IEnumerable<int> defaultValue = Enumerable.Repeat(-1, k - answer.Count);
+            answer.AddRange(defaultValue);
+        }
+
+        return answer.ToArray();
+    }
+
 }
