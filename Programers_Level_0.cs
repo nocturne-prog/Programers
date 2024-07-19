@@ -1823,8 +1823,7 @@ public class Programers_Level_0
     //https://school.programmers.co.kr/learn/courses/30/lessons/181858
     public int[] s181858(int[] arr, int k)
     {
-        HashSet<int> uniqueElements = new HashSet<int>(arr);
-        List<int> answer = new List<int>(uniqueElements);
+        List<int> answer = new List<int>(arr.Distinct());
 
         if (answer.Count > k)
         {
@@ -1837,6 +1836,350 @@ public class Programers_Level_0
         }
 
         return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181857
+    public int[] s181857(int[] arr)
+    {
+        List<int> answer = new List<int>(arr);
+
+        int length = arr.Length;
+        int value = 1;
+
+        while (value < length)
+        {
+            value *= 2;
+        }
+
+        IEnumerable<int> addValue = Enumerable.Repeat(0, value - length);
+        answer.AddRange(addValue);
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181855
+    public int s181855(string[] strArr)
+    {
+        var answer = strArr.GroupBy(x => x.Length).ToDictionary(x => x.Key, x => x.ToList());
+        return answer.Max(x => x.Value.Count);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181851
+    public int s181851(int[] rank, bool[] attendance)
+    {
+        Dictionary<int, int> list = new Dictionary<int, int>();
+
+        for (int i = 0; i < rank.Length; i++)
+        {
+            if (attendance[i] == true)
+            {
+                list.Add(i, rank[i]);
+            }
+        }
+
+        int[] answer = new int[3];
+
+        for (int i = 0; i < answer.Length; i++)
+        {
+            int key = list.OrderBy(kv => kv.Value)
+                            .First()
+                            .Key;
+            list.Remove(key);
+
+            answer[i] = key;
+        }
+
+        return (10000 * answer[0]) + (100 * answer[1]) + answer[2];
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181847
+    public string s181847(string n_str)
+    {
+        return n_str.TrimStart('0');
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181846
+    public string s181846(string a, string b)
+    {
+        int i = a.Length - 1;
+        int j = b.Length - 1;
+        int carry = 0;
+        StringBuilder result = new StringBuilder();
+
+        while (i >= 0 || j >= 0 || carry > 0)
+        {
+            int sum = carry;
+            if (i >= 0)
+            {
+                sum += a[i] - '0';
+                i--;
+            }
+
+            if (j >= 0)
+            {
+                sum += b[j] - '0';
+                j--;
+            }
+            result.Insert(0, sum % 10); // 결과 문자열의 맨 앞에 추가
+            carry = sum / 10; // 다음 자리로 넘길 올림 값
+        }
+
+        return result.ToString();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181841
+    public string s181841(string[] str_list, string ex)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str_list.Length; i++)
+        {
+            string value = str_list[i];
+
+            if (value.Contains(ex))
+                continue;
+
+            sb.Append(value);
+        }
+
+        return sb.ToString();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181839
+    public int s181839(int a, int b)
+    {
+        bool isEvenNumber_A = a % 2 == 0;
+        bool isEvenNumber_B = b % 2 == 0;
+
+        if (isEvenNumber_A == false && isEvenNumber_B == false)
+        {
+            return (a * a) + (b * b);
+        }
+        else if (isEvenNumber_A == false || isEvenNumber_B == false)
+        {
+            return 2 * (a + b);
+        }
+        else
+        {
+            return Math.Abs(a - b);
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181838
+    public int s181838(int[] date1, int[] date2)
+    {
+        DateTime dateA = new DateTime(date1[0], date1[1], date1[2]);
+        DateTime dateB = new DateTime(date2[0], date2[1], date2[2]);
+
+        return dateA < dateB ? 1 : 0;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181837
+    public int s181837(string[] order)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < order.Length; i++)
+        {
+            string value = order[i];
+
+            if (value.Contains("cafelatte"))
+            {
+                answer += 5000;
+            }
+            else
+            {
+                answer += 4500;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181836
+    public string[] s181836(string[] picture, int k)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i < picture.Length; i++)
+        {
+            string value = picture[i];
+            string result = "";
+            for (int m = 0; m < value.Length; m++)
+            {
+                char mark = value[m];
+
+                for (int h = 0; h < k; h++)
+                {
+                    result += mark;
+                }
+            }
+
+            for (int m = 0; m < k; m++)
+            {
+                answer.Add(result);
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181834
+    public string s181834(string myString)
+    {
+        char[] charArray = myString.ToCharArray();
+
+        for (int i = 0; i < charArray.Length; i++)
+        {
+            if (charArray[i] < 'l')
+            {
+                charArray[i] = 'l';
+            }
+        }
+
+        return new string(charArray);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181833
+    public int[,] s181833(int n)
+    {
+        if (n == 1)
+            return new int[,] { { 1 } };
+
+        int[,] answer = new int[n, n];
+
+        for (int i = 0; i < answer.GetLength(0); i++)
+        {
+            answer[i, i] = 1;
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181832
+    public int[,] s181832(int n)
+    {
+        int[,] answer = new int[n, n];
+
+
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181831
+    public int s181831(int[,] arr)
+    {
+        for (int i = 1; i < arr.GetLength(0); i++)
+        {
+            if (arr[0, i] != arr[i, 0])
+            {
+                return 0;
+            }
+
+            if (arr[arr.GetLength(1) - 1, i] != arr[i, arr.GetLength(1) - 1])
+            {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181830
+    public int[,] s181830(int[,] arr)
+    {
+        if (arr.GetLength(0) == arr.GetLength(1))
+            return arr;
+
+        int size = Math.Max(arr.GetLength(0), arr.GetLength(1));
+
+        int[,] answer = new int[size, size];
+
+        for (int i = 0; i < answer.GetLength(0); i++)
+        {
+            for (int m = 0; m < answer.GetLength(1); m++)
+            {
+                if (i >= arr.GetLength(0) || m >= arr.GetLength(1))
+                    answer[i, m] = 0;
+                else
+                    answer[i, m] = arr[i, m];
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181829
+    public int s181829(int[,] board, int k)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int m = 0; m < board.GetLength(1); m++)
+            {
+                if (i + m <= k)
+                    answer += board[i, m];
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120956
+    public int s120956(string[] babbling)
+    {
+        string[] values = new string[] { "aya", "ye", "woo", "ma" };
+        int answer = 0;
+
+        for (int i = 0; i < babbling.Length; i++)
+        {
+            string value = babbling[i];
+            for (int m = 0; m < values.Length; m++)
+            {
+                if (value.Equals(values[m]))
+                {
+                    answer++;
+                }
+            }
+        }
+
+        return answer;
     }
 
 }

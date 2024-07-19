@@ -7,7 +7,12 @@ class Program
     static void Main(string[] args)
     {
         Programers_Level_0 p0 = new Programers_Level_0();
-        var v = p0.s181858([0, 1, 1, 2, 2, 3], 3);
+        var v = p0.s181836(
+           ["x.x", ".x.", "x.x"], 3
+            );
+
+
+
         PrintArray(v);
         // Console.WriteLine(v);
         // Console.ReadLine();
