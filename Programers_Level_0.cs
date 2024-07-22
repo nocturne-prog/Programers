@@ -2082,19 +2082,6 @@ public class Programers_Level_0
 
 
 
-    //https://school.programmers.co.kr/learn/courses/30/lessons/181832
-    public int[,] s181832(int n)
-    {
-        int[,] answer = new int[n, n];
-
-
-
-        return answer;
-    }
-
-
-
-
     //https://school.programmers.co.kr/learn/courses/30/lessons/181831
     public int s181831(int[,] arr)
     {
@@ -2161,20 +2148,94 @@ public class Programers_Level_0
 
 
 
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181832
+    enum Dir
+    {
+        RIGHT,
+        LEFT,
+        DOWN,
+        UP
+    }
+    public int[,] s181832(int n)
+    {
+        Dir dir = Dir.RIGHT;
+        int[,] answer = new int[n, n];
+        answer[0, 0] = 1;
+
+        int count = 2;
+
+        int xMaxIdx = n - 1;
+        int xMinIdx = 0;
+        int yMaxIdx = n - 1;
+        int yMinIdx = 0;
+
+        int x = 0, y = 0;
+
+        while (count < (n * n) + 1)
+        {
+            if (x == xMaxIdx && y == yMinIdx && dir != Dir.DOWN)
+            {
+                dir = Dir.DOWN;
+                yMinIdx++;
+            }
+            else if (x == xMaxIdx && y == yMaxIdx && dir != Dir.LEFT)
+            {
+                dir = Dir.LEFT;
+                xMaxIdx--;
+            }
+            else if (x == xMinIdx && y == yMaxIdx && dir != Dir.UP)
+            {
+                dir = Dir.UP;
+                yMaxIdx--;
+            }
+            else if (x == xMinIdx && y == yMinIdx && dir != Dir.RIGHT)
+            {
+
+                dir = Dir.RIGHT;
+                xMinIdx++;
+
+            }
+
+            switch (dir)
+            {
+                case Dir.RIGHT: x++; break;
+                case Dir.LEFT: x--; break;
+                case Dir.DOWN: y++; break;
+                case Dir.UP: y--; break;
+            }
+
+            answer[y, x] = count++;
+        }
+
+        return answer;
+    }
+
+
+
     //https://school.programmers.co.kr/learn/courses/30/lessons/120956
     public int s120956(string[] babbling)
     {
-        string[] values = new string[] { "aya", "ye", "woo", "ma" };
+        string[] referenceValues = new string[] { "aya", "ye", "woo", "ma" };
         int answer = 0;
 
         for (int i = 0; i < babbling.Length; i++)
         {
             string value = babbling[i];
-            for (int m = 0; m < values.Length; m++)
+
+            for (int m = 0; m < referenceValues.Length; m++)
             {
-                if (value.Equals(values[m]))
+                if (value.Contains(referenceValues[m]))
                 {
-                    answer++;
+                    value = value.Replace(referenceValues[m], " ");
+
+                    // string[] split = value.Split(referenceValues[m]);
+                    // value = string.Join("", split);
+
+                    if (string.IsNullOrEmpty(value.Trim()) == true)
+                    {
+                        answer++;
+                        break;
+                    }
                 }
             }
         }
