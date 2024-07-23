@@ -2243,4 +2243,374 @@ public class Programers_Level_0
         return answer;
     }
 
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120924
+    public int s120924(int[] common)
+    {
+        bool isGeometric = common[2] - common[1] == common[1] - common[0];
+
+        if (isGeometric == true)
+        {
+            int gap = common[1] - common[0];
+
+            return common[common.Length - 1] + gap;
+        }
+        else
+        {
+            int gap = common[1] / common[0];
+
+            return common[common.Length - 1] * gap;
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120923
+    public int[] s120923(int num, int total)
+    {
+        int start = (total - num * (num - 1) / 2) / num;
+        return Enumerable.Range(start, num).ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120922
+    public int s120922(int M, int N)
+    {
+        return (N - 1) + (N * (M - 1));
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120921
+    public int s120921(string A, string B)
+    {
+        string value = A + A;
+        int idx = value.LastIndexOf(B);
+
+        if (idx < 0)
+            return -1;
+        else
+            return A.Length - idx;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120913
+    public string[] s120913(string my_str, int n)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i < my_str.Length; i += n)
+        {
+            int length = Math.Min(n, my_str.Length - i);
+            answer.Add(my_str.Substring(i, length));
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120912
+    public int s120912(int[] array)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            string value = array[i].ToString();
+
+            for (int m = 0; m < value.Length; m++)
+            {
+                if (value[m].Equals('7'))
+                {
+                    answer++;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120911
+    public string s120911(string my_string)
+    {
+        char[] value = my_string.ToLower().ToCharArray();
+
+        value = value.OrderBy(x => x).ToArray();
+
+        return new string(value);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120910
+    public int s120910(int n, int t)
+    {
+        return n * (int)Math.Pow(2, t);
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120909
+    public int s120909(int n)
+    {
+        int sqrt = (int)Math.Sqrt(n);
+
+        return sqrt * sqrt == n ? 1 : 2;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120908
+    public int s120908(string str1, string str2)
+    {
+        return str1.Contains(str2) ? 1 : 2;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120907
+    public string[] s120907(string[] quiz)
+    {
+        List<string> answer = new List<string>();
+
+        for (int i = 0; i < quiz.Length; i++)
+        {
+            string value = quiz[i];
+            string[] split = value.Split(' ');
+
+            int x = int.Parse(split[0]);
+            bool isPlus = split[1].Equals("+");
+            int y = int.Parse(split[2]);
+            int z = int.Parse(split[4]);
+
+            string OX = isPlus ?
+                            x + y == z ? "O" : "X" :
+                            x - y == z ? "O" : "X";
+
+            answer.Add(OX);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120906
+    public int s120906(int n)
+    {
+        string nString = n.ToString();
+
+        int answer = 0;
+        for (int i = 0; i < nString.Length; i++)
+        {
+            answer += nString[i] - '0';
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120905
+    public int[] s120905(int n, int[] numlist)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < numlist.Length; i++)
+        {
+            if (numlist[i] % n == 0)
+                answer.Add(numlist[i]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120904
+    public int s120904(int num, int k)
+    {
+        string numString = num.ToString();
+        int answer = numString.IndexOf(k.ToString());
+
+        return answer < 0 ? answer : answer + 1;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120903
+    public int s120903(string[] s1, string[] s2)
+    {
+        HashSet<string> h1 = new HashSet<string>(s1);
+        HashSet<string> h2 = new HashSet<string>(s2);
+
+        h1.IntersectWith(h2);
+
+        return h1.Count;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120902
+    public int s120902(string my_string)
+    {
+        string[] split = my_string.Split(' ');
+
+        int answer = 0;
+        answer += int.Parse(split[0]);
+
+        for (int i = 1; i < split.Length; i += 2)
+        {
+            bool isPlus = split[i].Equals("+");
+            int value = int.Parse(split[i + 1]);
+            if (isPlus == true)
+            {
+                answer += value;
+            }
+            else
+            {
+                answer -= value;
+            }
+
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120899
+    public int[] s120899(int[] array)
+    {
+        int max = array[0];
+        int idx = 0;
+
+        for (int i = 1; i < array.Length; i++)
+        {
+            if (array[i] > max)
+            {
+                max = array[i];
+                idx = i;
+            }
+        }
+
+        return new int[] { max, idx };
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120898
+    public int s120898(string message)
+    {
+        return message.Length * 2;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120897
+    public int[] s120897(int n)
+    {
+        HashSet<int> hashSet = new HashSet<int>();
+        for (int i = 1; i <= n; i++)
+        {
+            if (n % i == 0)
+            {
+                hashSet.Add(n);
+                hashSet.Add(i);
+            }
+        }
+
+        return hashSet.OrderBy(x => x).ToArray();
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120896
+    public string s120896(string s)
+    {
+        Dictionary<char, int> dic = new Dictionary<char, int>();
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char value = s[i];
+
+            if (dic.ContainsKey(value))
+            {
+                dic[value]++;
+            }
+            else
+            {
+                dic.Add(value, 1);
+            }
+        }
+
+        var answerList = dic.Where(x => x.Value == 1)
+                            .OrderBy(x => x.Key);
+
+        string answer = "";
+
+        foreach (var v in answerList)
+            answer += v.Key;
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120895
+    public string s120895(string my_string, int num1, int num2)
+    {
+        char[] mystring = my_string.ToCharArray();
+
+        char a = mystring[num1];
+        mystring[num1] = my_string[num2];
+        mystring[num2] = a;
+
+        return new string(mystring);
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120894
+    public long s120894(string numbers)
+    {
+        Dictionary<string, string> dic = new Dictionary<string, string>
+        {
+            { "zero", "0" },
+            { "one", "1" },
+            { "two", "2" },
+            { "three", "3" },
+            { "four", "4" },
+            { "five", "5" },
+            { "six", "6" },
+            { "seven", "7" },
+            { "eight", "8" },
+            { "nine", "9" }
+        };
+
+        foreach (var v in dic)
+        {
+            numbers = numbers.Replace(v.Key, v.Value);
+        }
+
+        return long.Parse(numbers);
+    }
+
+
 }
