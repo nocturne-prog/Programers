@@ -2613,4 +2613,77 @@ public class Programers_Level_0
     }
 
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120893
+    public string s120893(string my_string)
+    {
+        return string.Concat(my_string.Select(x => char.IsUpper(x) ? char.ToLower(x) : char.ToUpper(x)));
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120892
+    public string s120892(string cipher, int code)
+    {
+        string answer = "";
+
+        for (int i = code - 1; i < cipher.Length; i += code)
+        {
+            answer += cipher[i];
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120891
+    public int s120891(int order)
+    {
+        return string.Concat(order.ToString().Where(x => x.Equals('3') || x.Equals('6') || x.Equals('9'))).Length;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120890
+    public int s120890(int[] array, int n)
+    {
+        int[] answerArray = array.Select(x => Math.Abs(x - n)).ToArray();
+        int minValue = answerArray.Min();
+        int[] answerList = answerArray.Select((value, index) => new { value, index })
+                                            .Where(x => x.value == minValue)
+                                            .Select(x => array[x.index])
+                                            .ToArray();
+
+        return answerList.Min();
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120889
+    public int s120889(int[] sides)
+    {
+        return sides.Max() < sides.Sum() - sides.Max() ? 1 : 2;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120888
+    public string s120888(string my_string)
+    {
+        HashSet<char> answer = new HashSet<char>();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            answer.Add(my_string[i]);
+        }
+
+        return string.Concat(answer);
+    }
+
+
 }

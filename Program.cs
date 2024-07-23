@@ -7,7 +7,7 @@ class Program
     static void Main(string[] args)
     {
         Programers_Level_0 p0 = new Programers_Level_0();
-        var v = p0.s120894("onetwothreefourfivesixseveneightnine");
+        var v = p0.s120891(3);
         // PrintArray(v);
         Console.WriteLine(v);
         // Console.ReadLine();
