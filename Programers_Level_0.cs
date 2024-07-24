@@ -2686,4 +2686,137 @@ public class Programers_Level_0
     }
 
 
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120887
+    public int s120887(int i, int j, int k)
+    {
+        int answer = 0;
+
+        for (int m = i; m <= j; m++)
+        {
+            string value = m.ToString();
+
+            for (int h = 0; h < value.Length; h++)
+            {
+                if (value[h] - '0' == k)
+                    answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120886
+    public int s120886(string before, string after)
+    {
+        string sortBefore = string.Concat(before.OrderBy(x => x));
+        string sortAfter = string.Concat(after.OrderBy(x => x));
+
+        return sortBefore.Equals(sortAfter) ? 1 : 0;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120885
+    public string s120885(string bin1, string bin2)
+    {
+        int num1 = Convert.ToInt32(bin1, 2);
+        int num2 = Convert.ToInt32(bin2, 2);
+
+        return Convert.ToString(num1 + num2, 2);
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120884
+    public int s120884(int chicken)
+    {
+        int answer = 0;
+
+        while (chicken >= 10)
+        {
+            int quotient = chicken / 10;
+            int remider = chicken % 10;
+
+            answer += quotient;
+
+            chicken = remider + quotient;
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120883
+    public string s120883(string[] id_pw, string[,] db)
+    {
+        string id = "";
+        string pw = "";
+
+        for (int i = 0; i < db.GetLength(0); i++)
+        {
+            string dbID = db[i, 0];
+            string dbPW = db[i, 1];
+
+            if (id_pw[0].Equals(dbID))
+            {
+                id = dbID;
+                pw = dbPW;
+                break;
+            }
+        }
+
+        if (string.IsNullOrEmpty(id) == true)
+        {
+            return "fail";
+        }
+
+        if (id_pw[1].Equals(pw) == false)
+        {
+            return "wrong pw";
+        }
+
+        return "login";
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120882
+    public int[] s120882(int[,] score)
+    {
+        float[] avgScore = new float[score.GetLength(0)];
+
+        for (int i = 0; i < avgScore.Length; i++)
+        {
+            avgScore[i] = (score[i, 0] + score[i, 1]) / 2f;
+        }
+
+        List<float> sortList = avgScore.OrderByDescending(x => x).ToList();
+        Dictionary<float, int> dic = new Dictionary<float, int>();
+        int rank = 1;
+
+        for (int i = 0; i < sortList.Count; i++)
+        {
+            if (dic.ContainsKey(sortList[i]) == true)
+            {
+                rank++;
+            }
+            else
+            {
+                dic.Add(sortList[i], rank++);
+            }
+        }
+
+        return avgScore.Select(x => dic[x]).ToArray();
+    }
+
+
 }
