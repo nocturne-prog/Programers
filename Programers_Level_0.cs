@@ -2819,4 +2819,48 @@ public class Programers_Level_0
     }
 
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120880
+    public int[] s120880(int[] numlist, int n)
+    {
+        Dictionary<int, int> answerDic = numlist.Select((value, index) => new { Key = value - n, Value = index })
+                                            .ToDictionary(x => x.Key, x => x.Value);
+
+        return answerDic.OrderBy(x => Math.Abs(x.Key))
+                .ThenByDescending(x => numlist[x.Value])
+                .Select(x => numlist[x.Value]).ToArray();
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120878
+    public int s120878(int a, int b)
+    {
+        int A = a;
+        int B = b;
+
+        while (B != 0)
+        {
+            int temp = B;
+            B = A % B;
+            A = temp;
+        }
+
+        int greatestCommonDivisor = b / A;
+
+        while (greatestCommonDivisor % 2 == 0)
+        {
+            greatestCommonDivisor /= 2;
+        }
+
+        while (greatestCommonDivisor % 5 == 0)
+        {
+            greatestCommonDivisor /= 5;
+        }
+
+        return greatestCommonDivisor == 1 ? 1 : 2;
+    }
+
+
 }
