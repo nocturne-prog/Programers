@@ -2863,4 +2863,72 @@ public class Programers_Level_0
     }
 
 
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120876
+    public int s120876(int[,] lines)
+    {
+        int[] lineArray = new int[201];
+
+        for (int i = 0; i < lines.GetLength(0); i++)
+        {
+            for (int m = lines[i, 0]; m < lines[i, 1]; m++)
+            {
+                lineArray[m + 100]++;
+            }
+        }
+
+        int answer = 0;
+
+        for (int i = 0; i < lineArray.Length; i++)
+        {
+            if (lineArray[i] > 1)
+                answer++;
+        }
+
+        return answer;
+    }
+
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120875
+    public int s120875(int[,] dots)
+    {
+        int answer = 0;
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120871
+    public int s120871(int n)
+    {
+        int answer = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            answer++;
+
+            while (answer % 3 == 0 || answer.ToString().Contains("3"))
+            {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120869
+    public int s120869(string[] spell, string[] dic)
+    {
+        string spellString = string.Concat(spell.OrderBy(x => x));
+        string[] sortDic = dic.Select(x => string.Concat(x.ToCharArray().OrderBy(y => y))).ToArray();
+
+        return sortDic.FirstOrDefault(x => spellString.Equals(x)) == null ? 2 : 1;
+    }
+
+
 }

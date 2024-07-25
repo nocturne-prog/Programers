@@ -9,10 +9,8 @@ class Program
         Programers_Level_0 p0 = new Programers_Level_0();
 
 
-        var v = p0.s120878(
-            7, 20
-        );
-
+        var v = p0.s120869(
+            ["p", "o", "s"],	["sod", "eocd", "qixm", "adio", "soo"]);
 
 
         // PrintArray(v);
