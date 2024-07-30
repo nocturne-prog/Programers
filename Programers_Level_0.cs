@@ -2931,4 +2931,241 @@ public class Programers_Level_0
     }
 
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120819
+    public int[] s120819(int money)
+    {
+        int cost = 5500;
+
+        int[] answer = new int[2];
+        answer[0] = money / cost;
+        answer[1] = money % cost;
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120818
+    public int s120818(int price)
+    {
+        float percent = price >= 500000 ? 0.8f : price >= 300000 ? 0.9f : price >= 100000 ? 0.95f : 1f;
+        return (int)(price * percent);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120583
+    public int s120583(int[] array, int n)
+    {
+        return array.Count(x => x == n);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120585
+    public int s120585(int[] array, int height)
+    {
+        return array.Count(x => x > height);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120802
+    public int s120802(int num1, int num2)
+    {
+        return num1 + num2;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120803
+    public int s120803(int num1, int num2)
+    {
+        return num1 - num2;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120808
+    public int[] s120808(int numer1, int denom1, int numer2, int denom2)
+    {
+        int denom = denom1 * denom2;
+        int a = numer1 * denom2;
+        int b = numer2 * denom1;
+        int numer = a + b;
+
+        int A = numer;
+        int B = denom;
+
+        while (B != 0)
+        {
+            int temp = B;
+            B = A % B;
+            A = temp;
+        }
+
+        int[] answer = new int[] { numer / A, denom / A };
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120809
+    public int[] s120809(int[] numbers)
+    {
+        return numbers.Select(x => x * 2).ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120810
+    public int s120810(int num1, int num2)
+    {
+        return num1 % num2;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120811
+    public int s120811(int[] array)
+    {
+        return array.OrderByDescending(x => x).ToArray()[array.Length / 2];
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120812
+    public int s120812(int[] array)
+    {
+        var frequency = array.GroupBy(x => x)
+                            .Select(s => new { Value = s.Key, Count = s.Count() })
+                            .OrderByDescending(x => x.Count)
+                            .ToList();
+
+        if (frequency.Count > 1 && frequency[0].Count == frequency[1].Count)
+            return -1;
+
+
+        return frequency[0].Value;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120813
+    public int[] s120813(int n)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 1; i <= n; i += 2)
+            answer.Add(i);
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120814
+    public int s120814(int n)
+    {
+        int a = n / 7;
+        int b = n % 7;
+
+        return b == 0 ? a : a + 1;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120815
+    public int s120815(int n)
+    {
+        int slice = 6;
+        int GCD = slice;
+        int count = n;
+
+        while (count != 0)
+        {
+            int temp = count;
+            count = GCD % count;
+            GCD = temp;
+        }
+
+        return (slice * n) / GCD / slice;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120816
+    public int s120816(int slice, int n)
+    {
+        int a = n / slice;
+        int b = n % slice;
+
+        return b == 0 ? a : a + 1;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120817
+    public double s120817(int[] numbers)
+    {
+        return numbers.Sum() / (double)numbers.Length;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120821
+    public int[] s120821(int[] num_list)
+    {
+        return num_list.Reverse().ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120822
+    public string s120822(string my_string)
+    {
+        return new string(my_string.ToCharArray().Reverse().ToArray());
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120823
+    public void s120823(int n)
+    {
+        string star = "";
+        for (int i = 0; i < n; i++)
+        {
+            star += "*";
+            Console.WriteLine($"{star}");
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120824
+    public int[] s120824(int[] num_list)
+    {
+        int odd = num_list.Count(x => x % 2 == 1);
+        int even = num_list.Count(x => x % 2 == 0);
+
+        return new int[] { even, odd };
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120825
+    public string s120825(string my_string, int n)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            for (int m = 0; m < n; m++)
+            {
+                sb.Append(my_string[i]);
+            }
+        }
+
+        return sb.ToString();
+    }
 }
