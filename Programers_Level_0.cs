@@ -3168,4 +3168,222 @@ public class Programers_Level_0
 
         return sb.ToString();
     }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120833
+    public int[] s120833(int[] numbers, int num1, int num2)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i <= num2 - num1; i++)
+        {
+            answer.Add(numbers[i + num1]);
+        }
+
+        return answer.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120834
+    public string s120834(int age)
+    {
+        char[] array = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' };
+        string ageString = age.ToString();
+
+        string answer = "";
+
+        for (int i = 0; i < ageString.Length; i++)
+        {
+            int idx = ageString[i] - '0';
+            answer += array[idx];
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120835
+    public int[] s120835(int[] emergency)
+    {
+        var sortedEmergency = emergency.Select((key, value) => new { Key = key, Value = value })
+                                        .OrderByDescending(x => x.Key)
+                                        .ToList();
+
+        return sortedEmergency.Select((item, rank) => new { item.Value, Rank = rank + 1 })
+                                    .OrderBy(x => x.Value)
+                                    .Select(x => x.Rank)
+                                    .ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120836
+    public int s120836(int n)
+    {
+        int answer = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (n % i == 0)
+            {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120837
+    public int s120837(int hp)
+    {
+        int answer = 0;
+        int[] attack = { 5, 3, 1 };
+        int index = 0;
+
+        while (hp != 0)
+        {
+            int atk = attack[index];
+
+            if (hp >= atk)
+            {
+                hp -= atk;
+                answer++;
+            }
+            else
+            {
+                index++;
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120838
+    public string s120838(string letter)
+    {
+        Dictionary<string, char> morse = new Dictionary<string, char>
+        {
+            { ".-" , 'a'},
+            { "-..." , 'b'},
+            { "-.-." , 'c'},
+            { "-.." , 'd'},
+            { "." , 'e'},
+            { "..-." , 'f'},
+            { "--." , 'g'},
+            { "...." , 'h'},
+            { ".." , 'i'},
+            { ".---" , 'j'},
+            { "-.-" , 'k'},
+            { ".-.." , 'l'},
+            { "--" , 'm'},
+            { "-." , 'n'},
+            { "---" , 'o'},
+            { ".--." , 'p'},
+            { "--.-" , 'q'},
+            { ".-." , 'r'},
+            { "..." , 's'},
+            { "-" , 't'},
+            { "..-" , 'u'},
+            { "...-" , 'v'},
+            { ".--" , 'w'},
+            { "-..-" , 'x'},
+            { "-.--" , 'y'},
+            { "--.." , 'z'}
+
+        };
+
+        string[] msg = letter.Split(' ');
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < msg.Length; i++)
+        {
+            sb.Append(morse[msg[i]]);
+        }
+
+        return sb.ToString();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120839
+    public string s120839(string rsp)
+    {
+        Dictionary<char, char> plan = new Dictionary<char, char>
+        {
+            { '2', '0'},
+            { '0', '5'},
+            { '5', '2'},
+        };
+
+        char[] array = rsp.ToCharArray();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            sb.Append(plan[array[i]]);
+        }
+
+        return sb.ToString();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120840
+    public int s120840(int balls, int share)
+    {
+        if (share > balls - share)
+            share = balls - share;  // nCk == nC(n-k)
+
+        long result = 1;
+        for (int i = 0; i < share; i++)
+        {
+            result *= (balls - i);
+            result /= (i + 1);
+        }
+
+        return (int)result;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120841
+    public int s120841(int[] dot)
+    {
+        int x = dot[0];
+        int y = dot[1];
+
+        if (x > 0)
+        {
+            return y > 0 ? 1 : 4;
+        }
+        else
+        {
+            return y > 0 ? 2 : 3;
+        }
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120842
+    public int[,] s120842(int[] num_list, int n)
+    {
+        int[,] answer = new int[num_list.Length / n, n];
+
+        for (int i = 0; i < num_list.Length; i++)
+        {
+            int row = i / n;
+            int col = i % n;
+
+            answer[row,col] = num_list[i];
+        }
+
+        return answer;
+    }
 }
