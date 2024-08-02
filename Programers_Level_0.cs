@@ -3381,9 +3381,276 @@ public class Programers_Level_0
             int row = i / n;
             int col = i % n;
 
-            answer[row,col] = num_list[i];
+            answer[row, col] = num_list[i];
         }
 
         return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120843
+    public int s120843(int[] numbers, int k)
+    {
+        int idx = ((k - 1) * 2) % numbers.Length;
+        return numbers[idx];
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120844
+    public int[] s120844(int[] numbers, string direction)
+    {
+        List<int> list = new List<int>(numbers);
+
+        if (direction.Equals("right"))
+        {
+            int targetIndex = list.Count - 1;
+            int target = list[targetIndex];
+
+            list.RemoveAt(targetIndex);
+            list.Insert(0, target);
+        }
+        else
+        {
+            int targetIndex = 0;
+            int target = list[targetIndex];
+
+            list.RemoveAt(targetIndex);
+            list.Insert(list.Count, target);
+        }
+
+        return list.ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120845
+    public int s120845(int[] box, int n)
+    {
+        int width = box[0] / n;
+        int length = box[1] / n;
+        int height = box[2] / n;
+
+        if (width == 0 || length == 0 || height == 0)
+            return 0;
+
+        return width * length * height;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120846
+    public int s120846(int n)
+    {
+        int answer = 0;
+
+        for (int i = 4; i <= n; i++)
+        {
+            int count = 0;
+
+            for (int m = 1; m <= i; m++)
+            {
+                if (i % m == 0)
+                    count++;
+
+                if (count >= 3)
+                    break;
+            }
+
+            if (count >= 3)
+                answer++;
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120847
+    public int s120847(int[] numbers)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            for (int m = i + 1; m < numbers.Length; m++)
+            {
+                answer = Math.Max(numbers[i] * numbers[m], answer);
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120848
+    public int s120848(int n)
+    {
+        int answer = 1;
+
+        while (answer < n)
+        {
+            answer++;
+            n /= answer;
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120849
+    public string s120849(string my_string)
+    {
+        string[] removeList = new string[] { "a", "e", "i", "o", "u" };
+
+        for (int i = 0; i < removeList.Length; i++)
+        {
+            my_string = my_string.Replace(removeList[i], "");
+        }
+
+        return my_string;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120850
+    public int[] s120850(string my_string)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            char c = my_string[i];
+
+            if (char.IsDigit(c) == true)
+            {
+                answer.Add(c - '0');
+            }
+        }
+
+        return answer.OrderBy(x => x).ToArray();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120851
+    public int s120851(string my_string)
+    {
+        List<int> answer = new List<int>();
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            char c = my_string[i];
+
+            if (char.IsDigit(c) == true)
+            {
+                answer.Add(c - '0');
+            }
+        }
+
+        return answer.Sum();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120852
+    public int[] s120852(int n)
+    {
+        HashSet<int> answer = GetPrimeFactors(n).ToHashSet();
+        return answer.ToArray();
+    }
+
+    public List<int> GetPrimeFactors(int n)
+    {
+        List<int> factors = new List<int>();
+
+        // 2로 나누기
+        while (n % 2 == 0)
+        {
+            factors.Add(2);
+            n /= 2;
+        }
+
+        // 3 이상의 소수로 나누기
+        for (int i = 3; i <= Math.Sqrt(n); i += 2)
+        {
+            while (n % i == 0)
+            {
+                factors.Add(i);
+                n /= i;
+            }
+        }
+
+        // 남아 있는 수가 소수인 경우
+        if (n > 2)
+        {
+            factors.Add(n);
+        }
+
+        return factors;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120853
+    public int s120853(string s)
+    {
+        int answer = 0;
+        string[] split = s.Split(' ');
+
+        for (int i = 0; i < split.Length; i++)
+        {
+            if (split[i].Equals("Z"))
+            {
+                answer -= int.Parse(split[i - 1]);
+            }
+            else
+            {
+                answer += int.Parse(split[i]);
+            }
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120854
+    public int[] s120854(string[] strlist)
+    {
+        var answer = strlist.Select(x => x.Length).ToArray();
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120860
+    public int s120860(int[,] dots)
+    {
+        int x1 = dots[0, 0];
+        int y1 = dots[0, 1];
+
+        int x2 = 0;
+        int y2 = 0;
+
+        for (int i = 1; i < 4; i++)
+        {
+            if (dots[i, 0] != x1)
+            {
+                x2 = dots[i, 0];
+            }
+            if (dots[i, 1] != y1)
+            {
+                y2 = dots[i, 1];
+            }
+        }
+
+        int length = Math.Abs(x2 - x1);
+        int width = Math.Abs(y2 - y1);
+
+        return length * width;
     }
 }
