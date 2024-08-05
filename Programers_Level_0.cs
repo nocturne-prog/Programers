@@ -2891,16 +2891,6 @@ public class Programers_Level_0
 
 
 
-
-    //https://school.programmers.co.kr/learn/courses/30/lessons/120875
-    public int s120875(int[,] dots)
-    {
-        int answer = 0;
-        return answer;
-    }
-
-
-
     //https://school.programmers.co.kr/learn/courses/30/lessons/120871
     public int s120871(int n)
     {
@@ -3653,4 +3643,239 @@ public class Programers_Level_0
 
         return length * width;
     }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120861
+    public int[] s120861(string[] keyinput, int[] board)
+    {
+        int xLength = (board[0] - 1) / 2;
+        int yLength = (board[1] - 1) / 2;
+
+        int x = 0;
+        int y = 0;
+
+        for (int i = 0; i < keyinput.Length; i++)
+        {
+            switch (keyinput[i])
+            {
+                case "right":
+                    x = Math.Clamp(x + 1, -xLength, xLength);
+                    break;
+
+                case "left":
+                    x = Math.Clamp(x - 1, -xLength, xLength);
+                    break;
+
+                case "up":
+                    y = Math.Clamp(y + 1, -yLength, yLength);
+                    break;
+
+                case "down":
+                    y = Math.Clamp(y - 1, -yLength, yLength);
+                    break;
+            }
+        }
+
+        return new int[] { x, y };
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120862
+    public int s120862(int[] numbers)
+    {
+        Array.Sort(numbers);
+
+        int n = numbers.Length;
+        int maxProduct1 = numbers[n - 1] * numbers[n - 2];
+        int maxProduct2 = numbers[0] * numbers[1];
+
+        return Math.Max(maxProduct1, maxProduct2);
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120863
+    public string s120863(string polynomial)
+    {
+        string[] split = polynomial.Split(' ');
+        int x = 0;
+        int n = 0;
+
+        for (int i = 0; i < split.Length; i++)
+        {
+            if (split[i].Equals("+"))
+            {
+                continue;
+            }
+            else if (split[i].Contains('x'))
+            {
+                if (split[i].Equals("x"))
+                {
+                    x++;
+                }
+                else
+                {
+                    x += int.Parse(split[i].Remove(split[i].Length - 1));
+                }
+            }
+            else
+            {
+                n += int.Parse(split[i]);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (x > 0)
+        {
+            if (x == 1)
+            {
+                sb.Append("x");
+            }
+            else
+            {
+                sb.Append($"{x}x");
+            }
+        }
+
+
+        if (x > 0 && n > 0)
+        {
+            sb.Append(" + ");
+        }
+
+        if (n > 0)
+        {
+            sb.Append($"{n}");
+        }
+
+        return sb.ToString();
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120864
+    public int s120864(string my_string)
+    {
+        int answer = 0;
+        string value = "";
+
+        for (int i = 0; i < my_string.Length; i++)
+        {
+            char c = my_string[i];
+
+            if (char.IsDigit(c) == true)
+            {
+                value += c;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(value) == false)
+                {
+                    answer += int.Parse(value);
+                }
+
+                value = "";
+            }
+        }
+
+        if (string.IsNullOrEmpty(value) == false)
+        {
+            answer += int.Parse(value);
+        }
+
+        return answer;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120868
+    public int s120868(int[] sides)
+    {
+        int max = sides.Max();
+        int min = sides.Min();
+
+        int a = max - (max - min);
+        int b = max + min - (max + 1);
+
+        return a + b;
+    }
+
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120866
+    public int s120866(int[,] board)
+    {
+        int rowCount = board.GetLength(0);
+        int colCount = board.GetLength(1);
+
+        int[,] safeArea = new int[rowCount, colCount];
+
+        for (int row = 0; row < rowCount; row++)
+        {
+            for (int col = 0; col < colCount; col++)
+            {
+                int value = board[row, col];
+
+                if (value == 1)
+                {
+                    for (int i = -1; i < 2; i++)
+                    {
+                        for (int m = -1; m < 2; m++)
+                        {
+                            int tempRow = Math.Clamp(row + i, 0, rowCount - 1);
+                            int tempCol = Math.Clamp(col + m, 0, colCount - 1);
+
+                            safeArea[tempRow, tempCol] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        int answer = 0;
+
+        foreach (var v in safeArea)
+        {
+            if (v == 0)
+            {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/120875
+    public int s120875(int[,] dots)
+    {
+        int[][] dotList = new int[][]
+        {
+            new int[] {dots[0,0], dots[0,1]},
+            new int[] {dots[1,0], dots[1,1]},
+            new int[] {dots[2,0], dots[2,1]},
+            new int[] {dots[3,0], dots[3,1]},
+        };
+
+        if (AreParallel(dotList[0], dotList[1], dotList[2], dotList[3])) return 1;
+        if (AreParallel(dotList[0], dotList[2], dotList[1], dotList[3])) return 1;
+        if (AreParallel(dotList[0], dotList[3], dotList[1], dotList[2])) return 1;
+
+        return 0;
+    }
+
+    public double Slope(int[] point1, int[] point2)
+    {
+        return (double)(point2[1] - point1[1]) / (point2[0] - point1[0]);
+    }
+
+    public bool AreParallel(int[] p1, int[] p2, int[] p3, int[] p4)
+    {
+        return Slope(p1, p2) == Slope(p3, p4);
+    }
+
+
 }
