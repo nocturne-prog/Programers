@@ -7,24 +7,10 @@ class Program
     static void Main(string[] args)
     {
         Programers_Level_0 p0 = new Programers_Level_0();
+        Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p0.s120875(
-
-            new int[,]
-            {
-                // {1, 4}, 
-                // {9, 2}, 
-                // {3, 8}, 
-                // {11, 6}
-
-
-                {1, 2}, 
-                {2, 1}, 
-                {3, 4},
-                {4, 5},
-
-            });
+        var v = p1.s68935(45);
         // PrintArray(v);
         Console.WriteLine(v);
         // Console.ReadLine();
