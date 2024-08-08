@@ -10,7 +10,7 @@ class Program
         Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p1.s68935(45);
+        var v = p1.s12926("AB", 1);
         // PrintArray(v);
         Console.WriteLine(v);
         // Console.ReadLine();

@@ -289,4 +289,102 @@ public class Programers_Level_1
 
         return count;
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12930
+    public string s12930(string s)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        string[] split = s.Split(' ');
+
+        for (int i = 0; i < split.Length; i++)
+        {
+            if (i != 0)
+            {
+                sb.Append(' ');
+            }
+
+            bool isEven = true;
+            for (int m = 0; m < split[i].Length; m++)
+            {
+                char c = split[i][m];
+                sb.Append(isEven == true ? char.ToUpper(c) : char.ToLower(c));
+                isEven = !isEven;
+            }
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/86491
+    public int s86491(int[,] sizes)
+    {
+        int maxWidth = 0;
+        int maxHeight = 0;
+
+        for (int i = 0; i < sizes.GetLength(0); i++)
+        {
+            int width = Math.Max(sizes[i, 0], sizes[i, 1]);
+            int height = Math.Min(sizes[i, 0], sizes[i, 1]);
+
+            maxWidth = Math.Max(width, maxWidth);
+            maxHeight = Math.Max(height, maxHeight);
+        }
+
+        return maxWidth * maxHeight;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12926
+    public string s12926(string s, int n)
+    {
+        char[] alpabetUpper = new char[]
+        {
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+        };
+
+        char[] alpabetLower = new char[]
+        {
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+        };
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char c = s[i];
+
+            if (char.IsWhiteSpace(c) == true)
+            {
+                sb.Append(' ');
+                continue;
+            }
+
+            int idx = 0;
+            char[] array = char.IsUpper(c) == true ? alpabetUpper : alpabetLower;
+
+            for (int m = 0; m < array.Length; m++)
+            {
+                if (char.Equals(c, array[m]) == true)
+                {
+                    idx = m;
+                    break;
+                }
+            }
+
+            idx += n;
+
+            if (idx >= array.Length)
+            {
+                idx -= array.Length;
+            }
+
+            sb.Append(array[idx]);
+
+        }
+
+        return sb.ToString();
+    }
 }
