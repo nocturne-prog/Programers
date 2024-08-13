@@ -10,10 +10,11 @@ class Program
         Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p1.s12926("AB", 1);
+        var v = p1.s136798(
+            10, 3, 2);
+
         // PrintArray(v);
         Console.WriteLine(v);
-        // Console.ReadLine();
     }
 
     public static void PrintArray<T>(T[,] array)

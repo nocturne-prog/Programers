@@ -2,6 +2,7 @@ using System.Text;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Buffers;
 
 
 public class Programers_Level_1
@@ -19,6 +20,23 @@ public class Programers_Level_1
         }
 
         return divisors;
+    }
+
+    public int CountDivisors(int n)
+    {
+        int count = 0;
+        for (int i = 1; i <= Math.Sqrt(n); i++)
+        {
+            if (n % i == 0)
+            {
+                count++;
+                if (i != n / i)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     //https://school.programmers.co.kr/learn/courses/30/lessons/12928
@@ -386,5 +404,206 @@ public class Programers_Level_1
         }
 
         return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/142086
+    public int[] s142086(string s)
+    {
+        int[] answer = new int[s.Length];
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char c = s[i];
+            int count = 0;
+            bool isFind = false;
+            int m = i - 1;
+
+            while (m >= 0)
+            {
+                count++;
+
+                if (char.Equals(c, s[m]))
+                {
+                    isFind = true;
+                    break;
+                }
+
+                m--;
+            }
+
+            answer[i] = isFind ? count : -1;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12915
+    public string[] s12915(string[] strings, int n)
+    {
+        return strings.OrderBy(x => x[n])
+                        .ThenBy(x => x)
+                        .ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/134240
+    public string s134240(int[] food)
+    {
+        string left = string.Empty;
+
+        for (int i = 1; i < food.Length; i++)
+        {
+            int value = food[i];
+
+            if (value % 2 != 0)
+            {
+                food[i]--;
+            }
+
+            for (int m = 0; m < food[i] / 2; m++)
+            {
+                left += i.ToString();
+            }
+        }
+
+        char[] rightCharArray = left.ToCharArray();
+        Array.Reverse(rightCharArray);
+        string right = new string(rightCharArray);
+
+        string answer = left + "0" + right;
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/81301
+    public int s81301(string s)
+    {
+        string[] numbers = new string[]
+        {
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+        };
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            s = s.Replace(numbers[i], i.ToString());
+        }
+
+        return int.Parse(s);
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42748
+    public int[] s42748(int[] array, int[,] commands)
+    {
+        int[] answer = new int[commands.GetLength(0)];
+
+        for (int i = 0; i < commands.GetLength(0); i++)
+        {
+            int a = commands[i, 0] - 1;
+            int b = commands[i, 1];
+            int c = commands[i, 2];
+
+            List<int> list = new List<int>();
+
+            for (int m = a; m < b; m++)
+            {
+                list.Add(array[m]);
+            }
+
+            answer[i] = list.OrderBy(x => x).ToList()[c - 1];
+
+        }
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/138477
+    public int[] s138477(int k, int[] score)
+    {
+        int[] answer = new int[score.Length];
+        List<int> list = new List<int>();
+
+        for (int i = 0; i < score.Length; i++)
+        {
+            list.Add(score[i]);
+
+            list = list.OrderByDescending(x => x).ToList();
+
+            if (list.Count > k)
+            {
+                list.RemoveAt(list.Count - 1);
+            }
+
+            answer[i] = list[list.Count - 1];
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/132267
+    public int s132267(int a, int b, int n)
+    {
+        int answer = 0;
+
+        while (n >= a)
+        {
+            int addCount = (n / a) * b;
+
+            n %= a;
+            n += addCount;
+
+            answer += addCount;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/159994
+    public string s159994(string[] cards1, string[] cards2, string[] goal)
+    {
+        List<string> ref1 = new List<string>(cards1);
+        List<string> ref2 = new List<string>(cards2);
+
+        bool success = true;
+
+        for (int i = 0; i < goal.Length; i++)
+        {
+            string value = goal[i];
+
+            if (ref1.Count > 0 && value.Equals(ref1[0]) == true)
+            {
+                ref1.RemoveAt(0);
+            }
+            else if (ref2.Count > 0 && value.Equals(ref2[0]) == true)
+            {
+                ref2.RemoveAt(0);
+            }
+            else
+            {
+                success = false;
+                break;
+            }
+        }
+
+        return success ? "Yes" : "No";
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/136798
+    public int s136798(int number, int limit, int power)
+    {
+        for (int i = 1; i <= number; i++)
+        {
+            int count = CountDivisors(i);
+            
+            Console.WriteLine($"{i} :: {count}");
+        }
+
+        int answer = 0;
+        return answer;
     }
 }
