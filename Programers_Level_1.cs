@@ -39,6 +39,21 @@ public class Programers_Level_1
         return count;
     }
 
+
+    public bool IsPrimeNumber(int n)
+    {
+        if (n <= 1) return false;
+        if (n == 2) return true; // 2는 소수
+        if (n % 2 == 0) return false; // 2를 제외한 짝수는 소수가 아님
+
+        for (int i = 3; i <= Math.Sqrt(n); i += 2)
+        {
+            if (n % i == 0) return false;
+        }
+
+        return true;
+    }
+
     //https://school.programmers.co.kr/learn/courses/30/lessons/12928
     public int s12928(int n)
     {
@@ -596,14 +611,130 @@ public class Programers_Level_1
     //https://school.programmers.co.kr/learn/courses/30/lessons/136798
     public int s136798(int number, int limit, int power)
     {
+        List<int> list = new List<int>();
+
         for (int i = 1; i <= number; i++)
         {
             int count = CountDivisors(i);
-            
-            Console.WriteLine($"{i} :: {count}");
+            list.Add(count);
         }
 
+        return list.Select(x => x > limit ? power : x).Sum();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/135808
+    public int s135808(int k, int m, int[] score)
+    {
         int answer = 0;
+
+        List<int> apples = score.OrderByDescending(x => x).ToList();
+
+        while (apples.Count % m != 0)
+        {
+            apples.RemoveAt(apples.Count - 1);
+        }
+
+        for (int i = 0; i < apples.Count; i += m)
+        {
+            List<int> appleScores = new List<int>();
+
+            for (int h = i; h < i + m; h++)
+            {
+                appleScores.Add(apples[h]);
+            }
+
+            int minValue = appleScores.Min();
+
+            if (minValue > k)
+                minValue = k;
+
+            answer += minValue * m;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/161989
+    public int s161989(int n, int m, int[] section)
+    {
+        int count = 0;
+        int index = 0;
+
+        while (index < section.Length)
+        {
+            count++;
+
+            int end = section[index] + m - 1;
+
+            while (index < section.Length && section[index] <= end)
+            {
+                index++;
+            }
+        }
+
+        return count;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12921
+    public int s12921(int n)
+    {
+        int answer = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (IsPrimeNumber(i) == true)
+                answer++;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/133499
+    public int s133499(string[] babbling)
+    {
+        string[] referenceValues = new string[] { "aya", "ye", "woo", "ma" };
+        int answer = 0;
+
+
+        for (int i = 0; i < babbling.Length; i++)
+        {
+            string value = babbling[i];
+            int length = value.Length;
+            int skipIdx = -1;
+            bool isNext = false;
+
+            while (isNext == false)
+            {
+                for (int m = 0; m < referenceValues.Length; m++)
+                {
+                    if (skipIdx != -1 && skipIdx == m)
+                        continue;
+
+                    if (value.StartsWith(referenceValues[m]) == true)
+                    {
+                        value = value.Remove(0, referenceValues[m].Length);
+
+                        skipIdx = m;
+                        m = -1;
+
+                        if (string.IsNullOrEmpty(value) == true)
+                        {
+                            answer++;
+                            isNext = true;
+                            break;
+                        }
+                    }
+                }
+
+                isNext = true;
+            }
+
+        }
+
         return answer;
     }
 }
