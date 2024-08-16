@@ -737,4 +737,58 @@ public class Programers_Level_1
 
         return answer;
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/77484
+    public int[] s77484(int[] lottos, int[] win_nums)
+    {
+        Dictionary<int, int> lottoScore = new Dictionary<int, int>()
+        {
+            { 6, 1 },
+            { 5 ,2 },
+            { 4 ,3 },
+            { 3 ,4 },
+            { 2 ,5 },
+            { 1 ,6 },
+            { 0 ,6 },
+        };
+
+        int count = lottos.Intersect(win_nums).Count();
+        int zeroCount = lottos.Where(x => x == 0).Count();
+
+        return new int[] { lottoScore[count + zeroCount], lottoScore[count] };
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42862
+    public int s42862(int n, int[] lost, int[] reserve)
+    {
+        int reserveCount = 0;
+        List<int> lostList = lost.Except(reserve).OrderBy(x => x).ToList();
+        List<int> reserveList = reserve.Except(lost).OrderBy(x => x).ToList();
+
+        for (int i = 0; i < lostList.Count; i++)
+        {
+            int prevIdx = Math.Clamp(lostList[i] - 1, 1, n);
+            int nextIdx = Math.Clamp(lostList[i] + 1, 1, n);
+
+            for (int m = 0; m < reserveList.Count; m++)
+            {
+                if (reserveList[m] == prevIdx)
+                {
+                    reserveList.Remove(prevIdx);
+                    reserveCount++;
+                    break;
+                }
+                else if (reserveList[m] == nextIdx)
+                {
+                    reserveList.Remove(nextIdx);
+                    reserveCount++;
+                    break;
+                }
+            }
+        }
+
+        return n - lostList.Count() + reserveCount;
+    }
 }

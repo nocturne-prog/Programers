@@ -10,7 +10,7 @@ class Program
         Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p1.s133499(["ayaye", "uuu", "yeye", "yemawoo", "ayaayaa", "ayayewoomaaya"]);
+        var v = p1.s42862(5, [4, 2], [3, 5]);
 
         // PrintArray(v);
         Console.WriteLine(v);
