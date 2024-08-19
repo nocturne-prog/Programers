@@ -791,4 +791,487 @@ public class Programers_Level_1
 
         return n - lostList.Count() + reserveCount;
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/155652
+    public string s155652(string s, string skip, int index)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        List<char> alpabetLower = new List<char>
+        {
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+        };
+
+        for (int i = 0; i < skip.Length; i++)
+        {
+            alpabetLower.Remove(skip[i]);
+        }
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char c = s[i];
+
+            int alpabetIdx = -1;
+
+            for (int m = 0; m < alpabetLower.Count; m++)
+            {
+                if (alpabetLower[m].Equals(c) == true)
+                {
+                    alpabetIdx = m;
+                    break;
+                }
+            }
+
+            alpabetIdx += index;
+            if (alpabetIdx >= alpabetLower.Count)
+            {
+                alpabetIdx %= alpabetLower.Count;
+            }
+
+            sb.Append(alpabetLower[alpabetIdx]);
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/140108
+    public int s140108(string s)
+    {
+        int answer = 0;
+        char x = ' ';
+        int sameCount = 0;
+        int diffCount = 0;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (char.IsWhiteSpace(x) == true)
+            {
+                x = s[i];
+            }
+
+            if (x.Equals(s[i]) == true)
+            {
+                sameCount++;
+            }
+            else
+            {
+                diffCount++;
+            }
+
+            if (sameCount == diffCount)
+            {
+                x = ' ';
+                sameCount = 0;
+                diffCount = 0;
+
+                answer++;
+            }
+
+            if (i == s.Length - 1 && (sameCount != 0 || diffCount != 0))
+            {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/160586
+    public int[] s160586(string[] keymap, string[] targets)
+    {
+        Dictionary<char, int> dic = new Dictionary<char, int>();
+
+        for (int i = 0; i < keymap.Length; i++)
+        {
+            for (int m = 0; m < keymap[i].Length; m++)
+            {
+                char key = keymap[i][m];
+
+                if (dic.ContainsKey(key) == true)
+                {
+                    dic[key] = Math.Min(dic[key], m + 1);
+                }
+                else
+                {
+                    dic.Add(key, m + 1);
+                }
+            }
+        }
+
+        int[] answer = new int[targets.Length];
+
+        for (int i = 0; i < targets.Length; i++)
+        {
+            int count = 0;
+            bool isFail = false;
+            for (int m = 0; m < targets[i].Length; m++)
+            {
+                char key = targets[i][m];
+
+                if (dic.ContainsKey(key) == true)
+                {
+                    count += dic[key];
+                }
+                else
+                {
+                    isFail = true;
+                }
+            }
+
+            if (isFail == true)
+            {
+                count = -1;
+            }
+
+            answer[i] = count;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/131128
+    public string s131128(string X, string Y)
+    {
+        int[] numberX = new int[10];
+        int[] numberY = new int[10];
+
+        char[] arrayX = X.ToCharArray();
+        char[] arrayY = Y.ToCharArray();
+
+        foreach (char c in X.ToCharArray())
+        {
+            int value = c - '0';
+            numberX[value]++;
+        }
+
+        foreach (char c in Y.ToCharArray())
+        {
+            int value = c - '0';
+            numberY[value]++;
+        }
+
+        List<int> duplicateList = new List<int>();
+
+        for (int i = 0; i < numberX.Length; i++)
+        {
+            int count = Math.Min(numberX[i], numberY[i]);
+
+            if (count != 0)
+            {
+                for (int m = 0; m < count; m++)
+                {
+                    duplicateList.Add(i);
+                }
+            }
+        }
+
+        if (duplicateList.Count == 0)
+        {
+            return "-1";
+        }
+        else
+        {
+            if (duplicateList.Sum() == 0)
+                return "0";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var v in duplicateList.OrderByDescending(x => x))
+            {
+                sb.Append(v);
+            }
+
+            return sb.ToString();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/133502
+    public int s133502(int[] ingredient)
+    {
+        int answer = 0;
+        Stack<int> stack = new Stack<int>();
+
+        foreach (var v in ingredient)
+        {
+            stack.Push(v);
+
+            if (stack.Count >= 4)
+            {
+                int[] lastItems = new int[4];
+
+                int i = 0;
+                foreach (var item in stack)
+                {
+                    lastItems[i] = item;
+                    i++;
+
+                    if (i >= 4)
+                        break;
+                }
+
+                Array.Reverse(lastItems);
+
+                if (lastItems[0] == 1 && lastItems[1] == 2 && lastItems[2] == 3 && lastItems[3] == 1)
+                {
+                    stack.Pop();
+                    stack.Pop();
+                    stack.Pop();
+                    stack.Pop();
+                    answer++;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/118666
+    public string s118666(string[] survey, int[] choices)
+    {
+        Dictionary<char, int> dic = new Dictionary<char, int>()
+        {
+            { 'R' , 0 }, { 'T' , 0 },
+            { 'C' , 0 }, { 'F' , 0 },
+            { 'J' , 0 }, { 'M' , 0 },
+            { 'A' , 0 }, { 'N' , 0 },
+        };
+
+        int[] score = new int[] { 0, 3, 2, 1, 0, 1, 2, 3 };
+
+        for (int i = 0; i < survey.Length; i++)
+        {
+            char left = survey[i][0];
+            char right = survey[i][1];
+
+            int value = score[choices[i]];
+
+            if (choices[i] > 4)
+            {
+                dic[right] += value;
+            }
+            else
+            {
+                dic[left] += value;
+            }
+        }
+
+        List<char> keyList = dic.Keys.ToList();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < keyList.Count; i += 2)
+        {
+            char left = keyList[i];
+            char right = keyList[i + 1];
+
+            if (dic[right] > dic[left])
+            {
+                sb.Append(right);
+            }
+            else
+            {
+                sb.Append(left);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/161990
+    public int[] s161990(string[] wallpaper)
+    {
+        int minX = int.MaxValue;
+        int minY = int.MaxValue;
+        int maxX = int.MinValue;
+        int maxY = int.MinValue;
+
+        for (int i = 0; i < wallpaper.Length; i++)
+        {
+            for (int m = 0; m < wallpaper[i].Length; m++)
+            {
+                char c = wallpaper[i][m];
+
+                if (c.Equals('#') == true)
+                {
+                    minX = Math.Min(minX, i);
+                    minY = Math.Min(minY, m);
+                    maxX = Math.Max(maxX, i);
+                    maxY = Math.Max(maxY, m);
+                }
+            }
+        }
+
+        return new int[] { minX, minY, maxX + 1, maxY + 1 };
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/150370
+    public int[] s150370(string today, string[] terms, string[] privacies)
+    {
+        List<int> answer = new List<int>();
+        DateTime dateTime_Today = DateTime.Parse(today);
+        Dictionary<string, int> termsDic = new Dictionary<string, int>();
+
+        for (int i = 0; i < terms.Length; i++)
+        {
+            string[] split = terms[i].Split(' ');
+
+            termsDic.Add(split[0], int.Parse(split[1]));
+        }
+
+        for (int i = 0; i < privacies.Length; i++)
+        {
+            string[] split = privacies[i].Split(' ');
+
+            DateTime dateTime = DateTime.Parse(split[0]);
+            string term = split[1];
+
+            DateTime expireTime = dateTime.AddMonths(termsDic[term]);
+
+            if (expireTime <= dateTime_Today)
+            {
+                answer.Add(i + 1);
+            }
+        }
+
+        return answer.ToArray();
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/172928
+    public int[] s172928(string[] park, string[] routes)
+    {
+        int maxX = park[0].Length, maxY = park.Length;
+        int x = 0, y = 0;
+
+        for (int i = 0; i < park.Length; i++)
+        {
+            for (int m = 0; m < park[i].Length; m++)
+            {
+                if (char.Equals(park[i][m], 'S'))
+                {
+                    x = m;
+                    y = i;
+                }
+            }
+        }
+
+        for (int i = 0; i < routes.Length; i++)
+        {
+            string[] split = routes[i].Split(' ');
+            string dir = split[0];
+            int length = int.Parse(split[1]);
+
+            bool isAble = true;
+            int newX = x, newY = y;
+            for (int m = 1; m <= length; m++)
+            {
+                if (dir.Equals("E") == true)
+                {
+                    newX = x + m;
+                }
+                else if (dir.Equals("W") == true)
+                {
+                    newX = x - m;
+                }
+                else if (dir.Equals("N") == true)
+                {
+                    newY = y - m;
+                }
+                else
+                {
+                    newY = y + m;
+                }
+
+                if (newX < 0 || newX >= maxX || newY < 0 || newY >= maxY || char.Equals(park[newY][newX], 'X') == true)
+                {
+                    isAble = false;
+                    break;
+                }
+            }
+
+            if (isAble == true)
+            {
+                x = newX;
+                y = newY;
+
+                Console.WriteLine($"[{y},{x}]");
+            }
+        }
+
+        return new int[] { y, x };
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/178871
+    public string[] s178871(string[] players, string[] callings)
+    {
+        Dictionary<string, int> dic = new Dictionary<string, int>();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            dic.Add(players[i], i);
+        }
+
+        for (int i = 0; i < callings.Length; i++)
+        {
+            string calledPlayer = callings[i];
+            int currentIndex = dic[calledPlayer];
+            string prevPlayer = players[currentIndex - 1];
+
+            players[currentIndex - 1] = calledPlayer;
+            players[currentIndex] = prevPlayer;
+
+            dic[calledPlayer]--;
+            dic[prevPlayer]++;
+        }
+
+        return players;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/92334
+    public int[] s92334(string[] id_list, string[] report, int k)
+    {
+        int[] answer = new int[id_list.Length];
+        Dictionary<string, int> userList = new Dictionary<string, int>();
+        Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+
+        for (int i = 0; i < id_list.Length; i++)
+        {
+            dic.Add(id_list[i], new List<string>());
+            userList.Add(id_list[i], i);
+        }
+
+        string[] uniqueReport = report.Distinct().ToArray();
+
+        for (int i = 0; i < uniqueReport.Length; i++)
+        {
+            string[] split = uniqueReport[i].Split(' ');
+
+            string left = split[0];
+            string right = split[1];
+
+            dic[right].Add(left);
+        }
+
+        var answerList = dic.Where(x => x.Value.Count >= k);
+
+        foreach (var v in answerList)
+        {
+            // answer[userList[v.Key]]++;
+
+            for (int i = 0; i < v.Value.Count; i++)
+            {
+                answer[userList[v.Value[i]]]++;
+            }
+        }
+
+        return answer;
+    }
 }

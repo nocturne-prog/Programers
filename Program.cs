@@ -10,10 +10,10 @@ class Program
         Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p1.s42862(5, [4, 2], [3, 5]);
+        var v = p1.s92334(["muzi", "frodo", "apeach", "neo"], ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"], 2);
 
         // PrintArray(v);
-        Console.WriteLine(v);
+        // Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)
