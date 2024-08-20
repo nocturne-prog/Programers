@@ -8,12 +8,13 @@ class Program
     {
         Programers_Level_0 p0 = new Programers_Level_0();
         Programers_Level_1 p1 = new Programers_Level_1();
+        Programers_Level_2 p2 = new Programers_Level_2();
 
 
-        var v = p1.s258712(["muzi", "ryan", "frodo", "neo"], ["muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"]);
+        var v = p2.s42842(8, 1);
 
-        // PrintArray(v);
-        // Console.WriteLine(v);
+        PrintArray(v);
+        Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)

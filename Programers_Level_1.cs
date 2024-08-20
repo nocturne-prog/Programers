@@ -2,8 +2,6 @@ using System.Text;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Buffers;
-
 
 public class Programers_Level_1
 {
@@ -1331,10 +1329,6 @@ public class Programers_Level_1
                     {
                         answerList[giver]++;
                     }
-                    // if (sendRecord.Sum(x => x.Value) > receiveRecord.Sum(x => x.Value))
-                    // {
-                    //     answerList[giver]++;
-                    // }
                 }
             }
         }
