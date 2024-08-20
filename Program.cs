@@ -10,7 +10,7 @@ class Program
         Programers_Level_1 p1 = new Programers_Level_1();
 
 
-        var v = p1.s92334(["muzi", "frodo", "apeach", "neo"], ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"], 2);
+        var v = p1.s258712(["muzi", "ryan", "frodo", "neo"], ["muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"]);
 
         // PrintArray(v);
         // Console.WriteLine(v);

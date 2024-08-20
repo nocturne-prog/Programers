@@ -1274,4 +1274,71 @@ public class Programers_Level_1
 
         return answer;
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/258712
+    public int s258712(string[] friends, string[] gifts)
+    {
+        Dictionary<string, int> answerList = new Dictionary<string, int>();
+        Dictionary<string, (Dictionary<string, int>, Dictionary<string, int>)> giftRecords = new Dictionary<string, (Dictionary<string, int>, Dictionary<string, int>)>();
+
+        for (int i = 0; i < friends.Length; i++)
+        {
+            answerList[friends[i]] = 0;
+            giftRecords.Add(friends[i], (new Dictionary<string, int>(), new Dictionary<string, int>()));
+
+            for (int m = 0; m < friends.Length; m++)
+            {
+                if (i == m)
+                    continue;
+
+                giftRecords[friends[i]].Item1.Add(friends[m], 0);
+                giftRecords[friends[i]].Item2.Add(friends[m], 0);
+            }
+        }
+
+        foreach (var gift in gifts)
+        {
+            string[] parts = gift.Split(' ');
+            string giver = parts[0];
+            string receiver = parts[1];
+
+            if (giver != receiver)
+            {
+                giftRecords[giver].Item1[receiver]++;
+                giftRecords[receiver].Item2[giver]++;
+            }
+        }
+
+        foreach (var record in giftRecords)
+        {
+            string giver = record.Key;
+            Dictionary<string, int> sendRecord = record.Value.Item1;
+            Dictionary<string, int> receiveRecord = record.Value.Item2;
+
+            foreach (var item in record.Value.Item1)
+            {
+                if (sendRecord[item.Key] > receiveRecord[item.Key])
+                {
+                    answerList[giver]++;
+                }
+                else if (sendRecord[item.Key] == receiveRecord[item.Key])
+                {
+                    int giverGiftScore = sendRecord.Sum(x => x.Value) - receiveRecord.Sum(x => x.Value);
+                    int receiverGiftScore = giftRecords[item.Key].Item1.Sum(x => x.Value) - giftRecords[item.Key].Item2.Sum(x => x.Value);
+
+                    if (giverGiftScore > receiverGiftScore)
+                    {
+                        answerList[giver]++;
+                    }
+                    // if (sendRecord.Sum(x => x.Value) > receiveRecord.Sum(x => x.Value))
+                    // {
+                    //     answerList[giver]++;
+                    // }
+                }
+            }
+        }
+
+        return answerList.Values.Max();
+    }
 }
