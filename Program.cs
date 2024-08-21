@@ -11,9 +11,10 @@ class Program
         Programers_Level_2 p2 = new Programers_Level_2();
 
 
-        var v = p2.s42842(8, 1);
+        var v = p2.s76502(
+                    "(){{");
 
-        PrintArray(v);
+        // PrintArray(v);
         Console.WriteLine(v);
     }
 

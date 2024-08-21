@@ -6,6 +6,25 @@ using System.Collections.Generic;
 
 public class Programers_Level_2
 {
+    //최대공약수 구하기
+    public int GreatestCommonDivisor(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+
+    //최소공배수 구하기
+    public int LeastCommonMultiple(int a, int b)
+    {
+        return (a * b) / GreatestCommonDivisor(a, b);
+    }
+
     //https://school.programmers.co.kr/learn/courses/30/lessons/12939
     public string s12939(string s)
     {
@@ -218,5 +237,217 @@ public class Programers_Level_2
         }
 
         return typeCount;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12985
+    public int s12985(int n, int a, int b)
+    {
+        int answer = 0;
+
+        while (a != b)
+        {
+            a = (a + 1) / 2;
+            b = (b + 1) / 2;
+
+            answer++;
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12981
+    public int[] s12981(int n, string[] words)
+    {
+        List<string> list = new List<string>();
+        string prevWords = words[0];
+
+        list.Add(prevWords);
+        for (int i = 1; i < words.Length; i++)
+        {
+            char tail = prevWords[prevWords.Length - 1];
+            char head = words[i][0];
+
+            if (tail.Equals(head) == true && list.Contains(words[i]) == false)
+            {
+                prevWords = words[i];
+                list.Add(words[i]);
+            }
+            else
+            {
+                return new int[] { (i % n) + 1, (i / n) + 1 };
+            }
+        }
+
+        return new int[] { 0, 0 };
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12953
+    public int s12953(int[] arr)
+    {
+        Array.Sort(arr);
+        int answer = arr[0];
+
+        for (int i = 1; i < arr.Length; i++)
+        {
+            answer = LeastCommonMultiple(answer, arr[i]);
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12914
+    public long s12914(int n)
+    {
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        dp[2] = 2;
+
+        for (int i = 3; i <= n; i++)
+        {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567;
+        }
+
+        return dp[n];
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/131701
+    public int s131701(int[] elements)
+    {
+        HashSet<int> answerList = new HashSet<int>(elements);
+        answerList.Add(elements.Sum());
+
+        for (int i = 2; i < elements.Length; i++)
+        {
+            int length = i;
+            int count = elements.Length - length + 1;
+
+            for (int m = 0; m < elements.Length; m++)
+            {
+                int value = 0;
+                for (int h = 0; h < count; h++)
+                {
+                    int idx = (m + h) % elements.Length;
+                    value += elements[idx];
+                }
+
+                answerList.Add(value);
+            }
+        }
+
+        return answerList.Count;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/131127
+    public int s131127(string[] want, int[] number, string[] discount)
+    {
+        int answer = 0;
+
+        List<string> wantList = new List<string>();
+
+        for (int i = 0; i < want.Length; i++)
+        {
+            for (int m = 0; m < number[i]; m++)
+            {
+                wantList.Add(want[i]);
+            }
+        }
+
+        wantList.Sort();
+
+        for (int i = 0; i < discount.Length; i++)
+        {
+            List<string> v = discount.Skip(i).Take(10).ToList();
+            v.Sort();
+
+            if (wantList.SequenceEqual(v))
+            {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/76502
+    public int s76502(string s)
+    {
+        int answer = 0;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            bool isValid = true;
+            Stack<char> stack = new Stack<char>();
+            for (int m = 0; m < s.Length; m++)
+            {
+                if (s[m] == '(' || s[m] == '{' || s[m] == '[')
+                {
+                    stack.Push(s[m]);
+                }
+                else
+                {
+                    if (stack.Count == 0)
+                    {
+                        isValid = false;
+                        break;
+                    }
+                    else
+                    {
+                        char pop = stack.Pop();
+
+                        if ((s[m] == ')' && pop != '(') ||
+                            (s[m] == '}' && pop != '{') ||
+                            (s[m] == ']' && pop != '['))
+                        {
+                            isValid = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (isValid == true && stack.Count == 0)
+            {
+                answer++;
+            }
+
+            s = s.Substring(1) + s[0];
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/87390
+    public int[] s87390(int n, long left, long right)
+    {
+        int[,] array = new int[n, n];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (i > j)
+                {
+                    array[i, j] = i + 1;
+                }
+                else
+                {
+                    array[i, j] = j + 1;
+                }
+            }
+        }
+
+        int[] answer = new int[] { };
+        return answer;
     }
 }
