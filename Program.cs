@@ -11,9 +11,7 @@ class Program
         Programers_Level_2 p2 = new Programers_Level_2();
 
 
-        var v = p2.s76502(
-                    "(){{");
-
+        var v = p2.s12909("aa");
         // PrintArray(v);
         Console.WriteLine(v);
     }
@@ -22,7 +20,7 @@ class Program
     {
         for (int i = 0; i < array.GetLength(0); i++)
         {
-            T[] temp = new T[array.GetLength(0)];
+            T[] temp = new T[array.GetLength(1)];
             for (int m = 0; m < array.GetLength(1); m++)
             {
                 temp[m] = array[i, m];

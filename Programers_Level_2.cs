@@ -430,24 +430,115 @@ public class Programers_Level_2
     //https://school.programmers.co.kr/learn/courses/30/lessons/87390
     public int[] s87390(int n, long left, long right)
     {
-        int[,] array = new int[n, n];
+        int[] answer = new int[right - left + 1];
 
-        for (int i = 0; i < n; i++)
+        for (long k = left; k <= right; k++)
         {
-            for (int j = 0; j < n; j++)
+            long row = k / n;
+            long col = k % n;
+            answer[k - left] = (int)(Math.Max(row, col) + 1);
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42747
+    public int s42747(int[] citations)
+    {
+        int answer = 0;
+
+        for (int i = citations.Length; i > 0; i--)
+        {
+            int count = citations.Count(x => x >= i);
+
+            if (count >= i)
             {
-                if (i > j)
+                answer = i;
+                break;
+            }
+        }
+
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42578
+    public int s42578(string[,] clothes)
+    {
+        Dictionary<string, int> dic = new Dictionary<string, int>();
+
+        for (int i = 0; i < clothes.GetLength(0); i++)
+        {
+            string key = clothes[i, 1];
+
+            if (dic.ContainsKey(key) == false)
+            {
+                dic.Add(key, 0);
+            }
+
+            dic[key]++;
+        }
+
+        int answer = 1;
+
+        foreach (var v in dic)
+        {
+            answer *= (v.Value + 1);
+        }
+
+        answer--;
+        return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12949
+    public int[,] s12949(int[,] arr1, int[,] arr2)
+    {
+        int[,] answer = new int[arr1.GetLength(0), arr2.GetLength(1)];
+
+        for (int i = 0; i < answer.GetLength(0); i++)
+        {
+            for (int m = 0; m < answer.GetLength(1); m++)
+            {
+                answer[i, m] = 0;
+
+                for (int h = 0; h < arr1.GetLength(1); h++)
                 {
-                    array[i, j] = i + 1;
-                }
-                else
-                {
-                    array[i, j] = j + 1;
+                    answer[i, m] += (arr1[i, h] * arr2[h, m]);
                 }
             }
         }
 
-        int[] answer = new int[] { };
         return answer;
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/87946
+    public class s87946
+    {
+        int maxCount = 0;
+        public int solution(int k, int[,] dungeons)
+        {
+            bool[] visited = new bool[dungeons.GetLength(0)];
+            DFS(k, dungeons, visited, 0);
+
+            return maxCount;
+        }
+
+        public void DFS(int k, int[,] dungeons, bool[] visited, int count)
+        {
+            for (int i = 0; i < dungeons.GetLength(0); i++)
+            {
+                if (visited[i] == false && k >= dungeons[i, 0])
+                {
+                    visited[i] = true;
+                    DFS(k - dungeons[i, 1], dungeons, visited, count + 1);
+                    visited[i] = false;
+                }
+            }
+
+            maxCount = Math.Max(maxCount, count);
+        }
     }
 }
