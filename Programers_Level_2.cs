@@ -541,4 +541,297 @@ public class Programers_Level_2
             maxCount = Math.Max(maxCount, count);
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42586
+    public class s42586
+    {
+        public int[] solution(int[] progresses, int[] speeds)
+        {
+            List<int> answer = new List<int>();
+            int index = 0;
+
+            while (index < progresses.Length)
+            {
+                if (progresses[index] == 100)
+                {
+                    int count = 0;
+                    for (int i = index; i < progresses.Length; i++)
+                    {
+                        if (progresses[i] == 100)
+                        {
+                            count++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    index += count;
+                    answer.Add(count);
+                }
+                else
+                {
+                    progresses = Next(progresses, speeds);
+                }
+            }
+
+            return answer.ToArray();
+        }
+
+        public int[] Next(int[] progresses, int[] speeds)
+        {
+            for (int i = 0; i < progresses.Length; i++)
+            {
+                progresses[i] = Math.Clamp(progresses[i] + speeds[i], 0, 100);
+            }
+
+            return progresses;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/43165
+    public class s43165
+    {
+        public int solution(int[] numbers, int target)
+        {
+            return DFS(numbers, target, 0, 0);
+        }
+
+        public int DFS(int[] numbers, int target, int index, int sum)
+        {
+            if (index == numbers.Length)
+            {
+                return sum == target ? 1 : 0;
+            }
+
+            int c1 = DFS(numbers, target, index + 1, sum + numbers[index]);
+            int c2 = DFS(numbers, target, index + 1, sum - numbers[index]);
+
+            return c1 + c2;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/84512
+    public class s84512
+    {
+        public int solution(string word)
+        {
+            string vowels = "AEIOU";
+            int[] multiplier = { 781, 156, 31, 6, 1 }; // 각 자리의 가중치
+
+            int position = 0;
+
+            for (int i = 0; i < word.Length; i++)
+            {
+                int index = vowels.IndexOf(word[i]);
+                position += index * multiplier[i] + 1;
+            }
+
+            return position;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/1844
+    public class s1844
+    {
+        public int solution(int[,] maps)
+        {
+            int[,] dir = new int[,]
+            {
+                { -1,  0 },
+                {  1,  0 },
+                {  0, -1 },
+                {  0,  1 }
+            };
+
+            Queue<(int, int, int)> queue = new Queue<(int, int, int)>();
+            queue.Enqueue((0, 0, 1));
+            maps[0, 0] = 0;
+
+            while (queue.Count > 0)
+            {
+                var (x, y, distance) = queue.Dequeue();
+
+                for (int i = 0; i < dir.GetLength(0); i++)
+                {
+                    int moveX = x + dir[i, 0];
+                    int moveY = y + dir[i, 1];
+
+                    if (moveY >= 0 && moveY < maps.GetLength(1) && moveX >= 0 && moveX < maps.GetLength(0) && maps[moveX, moveY] == 1)
+                    {
+                        if (moveX == maps.GetLength(0) - 1 && moveY == maps.GetLength(1) - 1)
+                        {
+                            return distance + 1;
+                        }
+
+                        maps[moveX, moveY] = 0;
+                        queue.Enqueue((moveX, moveY, distance + 1));
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/92335
+    public class s92335
+    {
+        public int solution(int n, int k)
+        {
+            int count = 0;
+            string stringN = ConvertToBase(n, k);
+            char[] arrayN = stringN.ToCharArray();
+
+            string value = string.Empty;
+            for (int i = 0; i < arrayN.Length; i++)
+            {
+                char c = arrayN[i];
+
+                if (c.Equals('0') == false)
+                {
+                    value += c;
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(value))
+                        continue;
+
+                    if (IsPrimeNumber(long.Parse(value)))
+                    {
+                        count++;
+                    }
+
+                    value = "";
+                }
+            }
+
+            if (string.IsNullOrEmpty(value) == false && IsPrimeNumber(long.Parse(value)))
+            {
+                count++;
+            }
+
+            return count;
+        }
+
+        public string ConvertToBase(int n, int k)
+        {
+            if (n == 0) return "0";
+
+            string result = "";
+            while (n > 0)
+            {
+                int remainder = n % k;
+                result = remainder.ToString() + result;
+                n /= k;
+            }
+
+            return result;
+        }
+
+        public bool IsPrimeNumber(long num)
+        {
+            if (num <= 1)
+                return false;
+
+            if (num == 2)
+                return true;
+
+            if (num % 2 == 0)
+                return false;
+
+            int sqrt = (int)Math.Sqrt(num);
+            for (int i = 3; i <= sqrt; i += 2)
+            {
+                if (num % i == 0)
+                    return false;
+            }
+
+            return true;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/49994
+    public class s49994
+    {
+        public int solution(string dirs)
+        {
+            HashSet<(int, int, int, int)> hashSet = new HashSet<(int, int, int, int)>();
+
+            int x = 0, y = 0;
+
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                char command = dirs[i];
+                int newX = x, newY = y;
+
+                if (command.Equals('U'))
+                {
+                    newY++;
+                }
+                else if (command.Equals('D'))
+                {
+                    newY--;
+                }
+                else if (command.Equals('L'))
+                {
+                    newX--;
+                }
+                else
+                {
+                    newX++;
+                }
+
+                if (Math.Abs(newX) <= 5 && Math.Abs(newY) <= 5)
+                {
+                    if (hashSet.Contains((newX, newY, x, y)) == false)
+                    {
+                        hashSet.Add((x, y, newX, newY));
+                    }
+
+                    x = newX;
+                    y = newY;
+                }
+            }
+
+            return hashSet.Count;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/154539
+    public class s154539
+    {
+        public int[] solution(int[] numbers)
+        {
+            int n = numbers.Length;
+            int[] answer = new int[n];
+            Stack<int> stack = new Stack<int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                while (stack.Count > 0 && numbers[stack.Peek()] < numbers[i])
+                {
+                    int index = stack.Pop();
+                    answer[index] = numbers[i];
+                }
+                stack.Push(i);
+            }
+
+            while (stack.Count > 0)
+            {
+                answer[stack.Pop()] = -1;
+            }
+
+            return answer;
+        }
+    }
 }

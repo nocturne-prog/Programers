@@ -6,12 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_0 p0 = new Programers_Level_0();
-        Programers_Level_1 p1 = new Programers_Level_1();
-        Programers_Level_2 p2 = new Programers_Level_2();
-
-
-        var v = p2.s12909("aa");
+        Programers_Level_2.s154539 a = new Programers_Level_2.s154539();
+        var v = a.solution([9, 1, 5, 3, 6, 2]);
         // PrintArray(v);
         Console.WriteLine(v);
     }
