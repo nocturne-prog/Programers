@@ -2,6 +2,7 @@ using System.Text;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 
 
 public class Programers_Level_2
@@ -17,7 +18,6 @@ public class Programers_Level_2
         }
         return a;
     }
-
 
     //최소공배수 구하기
     public int LeastCommonMultiple(int a, int b)
@@ -812,26 +812,326 @@ public class Programers_Level_2
     {
         public int[] solution(int[] numbers)
         {
-            int n = numbers.Length;
-            int[] answer = new int[n];
+            int[] answer = new int[numbers.Length];
+
+            for (int i = 0; i < answer.Length; i++)
+            {
+                answer[i] = -1;
+            }
+
             Stack<int> stack = new Stack<int>();
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
                 while (stack.Count > 0 && numbers[stack.Peek()] < numbers[i])
                 {
-                    int index = stack.Pop();
-                    answer[index] = numbers[i];
+                    int idx = stack.Pop();
+                    answer[idx] = numbers[i];
                 }
-                stack.Push(i);
-            }
 
-            while (stack.Count > 0)
-            {
-                answer[stack.Pop()] = -1;
+                stack.Push(i);
             }
 
             return answer;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/132265
+    public class s132265
+    {
+        public int solution(int[] topping)
+        {
+            Dictionary<int, int> leftDic = new Dictionary<int, int>();
+            Dictionary<int, int> rightDic = new Dictionary<int, int>();
+
+            foreach (int t in topping)
+            {
+                if (rightDic.ContainsKey(t) == false)
+                {
+                    rightDic.Add(t, 0);
+                }
+
+                rightDic[t]++;
+            }
+
+            int answer = 0;
+
+            foreach (int t in topping)
+            {
+                if (leftDic.ContainsKey(t) == false)
+                {
+                    leftDic.Add(t, 0);
+                }
+
+                leftDic[t]++;
+                rightDic[t]--;
+
+                if (rightDic[t] == 0)
+                {
+                    rightDic.Remove(t);
+                }
+
+                if (leftDic.Count == rightDic.Count)
+                {
+                    answer++;
+                }
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/92341
+    public class s92341
+    {
+        public int[] solution(int[] fees, string[] records)
+        {
+            int baseTime = fees[0];
+            int baseFare = fees[1];
+            int unitTime = fees[2];
+            int unitFare = fees[3];
+
+            Dictionary<string, int> parkingTimeDic = new Dictionary<string, int>();
+            Dictionary<string, DateTime> parkingZoneDic = new Dictionary<string, DateTime>();
+
+            for (int i = 0; i < records.Length; i++)
+            {
+                string[] split = records[i].Split(' ');
+                DateTime date = DateTime.Parse(split[0]);
+                string number = split[1];
+                bool isIn = split[2].Equals("IN");
+
+                if (isIn == true)
+                {
+                    parkingZoneDic.Add(number, date);
+                }
+                else
+                {
+                    DateTime inTime = parkingZoneDic[number];
+                    parkingZoneDic.Remove(number);
+                    int minute = (int)(date - inTime).TotalMinutes;
+
+                    if (parkingTimeDic.ContainsKey(number) == false)
+                    {
+                        parkingTimeDic.Add(number, 0);
+                    }
+
+                    parkingTimeDic[number] += minute;
+                }
+            }
+
+            foreach (var v in parkingZoneDic)
+            {
+                int minute = (int)(DateTime.Parse("23:59") - v.Value).TotalMinutes;
+
+                if (parkingTimeDic.ContainsKey(v.Key) == false)
+                {
+                    parkingTimeDic.Add(v.Key, 0);
+                }
+
+                parkingTimeDic[v.Key] += minute;
+            }
+
+            int[] answer = new int[parkingTimeDic.Count];
+            int idx = 0;
+
+            foreach (var v in parkingTimeDic.OrderBy(x => x.Key))
+            {
+                int value = 0;
+
+                if (v.Value <= baseTime)
+                {
+                    value = baseFare;
+                }
+                else
+                {
+                    int multiplier = (v.Value - baseTime) / unitTime;
+
+                    if ((v.Value - baseTime) % unitTime != 0)
+                    {
+                        multiplier++;
+                    }
+
+                    value = baseFare + (multiplier * unitFare);
+                }
+
+                answer[idx] = value;
+                idx++;
+
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/131704
+    public class s131704
+    {
+        public int solution(int[] order)
+        {
+            Stack<int> stack = new Stack<int>();
+            List<int> answer = new List<int>();
+            int orderIndex = 0;
+            int max = order.Max() + 1;
+
+            for (int i = 1; i <= max; i++)
+            {
+                while (stack.Count > 0 && stack.Peek() == order[orderIndex])
+                {
+                    answer.Add(stack.Pop());
+                    orderIndex++;
+                }
+
+                stack.Push(i);
+            }
+
+            return answer.Count;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/154538
+    public class s154538
+    {
+        public int solution(int x, int y, int n)
+        {
+            if (x == y)
+                return 0;
+
+            int[] op = new int[]
+            {
+                0, // +
+                1, // * 2
+                2  // * 3
+            };
+
+            HashSet<int> visited = new HashSet<int>();
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+            queue.Enqueue((0, x));
+
+            while (queue.Count > 0)
+            {
+                var (count, value) = queue.Dequeue();
+
+                for (int i = 0; i < op.Length; i++)
+                {
+                    int newValue = op[i] == 0 ? value + n : op[i] == 1 ? value * 2 : value * 3;
+
+                    if (newValue == y)
+                    {
+                        return count + 1;
+                    }
+                    else
+                    {
+                        if (newValue < y && visited.Contains(newValue) == false)
+                        {
+                            visited.Add(newValue);
+                            queue.Enqueue((count + 1, newValue));
+                        }
+
+                    }
+                }
+
+            }
+
+            return -1;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/77885
+    public class s77885
+    {
+        public long[] solution(long[] numbers)
+        {
+            long[] answer = new long[numbers.Length];
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                string binary = "0" + ConvertToBase(numbers[i], 2);
+
+                for (int m = binary.Length - 1; m >= 0; m--)
+                {
+                    char c = binary[m];
+
+                    if (c.Equals('0') == true)
+                    {
+                        char[] binaryArray = binary.ToCharArray();
+                        binaryArray[m] = '1';
+
+                        if (m != binary.Length - 1)
+                        {
+                            binaryArray[m + 1] = '0';
+                        }
+
+                        string newBinary = new string(binaryArray);
+                        answer[i] = Convert.ToInt64(newBinary, 2);
+                        break;
+                    }
+                }
+            }
+
+            return answer;
+        }
+
+        public string ConvertToBase(long n, int k)
+        {
+            if (n == 0) return "0";
+
+            string result = "";
+            while (n > 0)
+            {
+                long remainder = n % k;
+                result = remainder.ToString() + result;
+                n /= k;
+            }
+
+            return result;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42583
+    public class s42583
+    {
+        public int solution(int bridge_length, int weight, int[] truck_weights)
+        {
+            Queue<int> bridgeQueue = new Queue<int>();
+            int index = 0;
+            int totalWeight = 0;
+            int time = 0;
+
+            for (int i = 0; i < bridge_length; i++)
+            {
+                bridgeQueue.Enqueue(0);
+            }
+
+            while (bridgeQueue.Count > 0)
+            {
+                time++;
+
+                totalWeight -= bridgeQueue.Dequeue();
+
+                if (index < truck_weights.Length)
+                {
+                    if (totalWeight + truck_weights[index] <= weight)
+                    {
+                        bridgeQueue.Enqueue(truck_weights[index]);
+                        totalWeight += truck_weights[index];
+                        index++;
+                    }
+                    else
+                    {
+                        bridgeQueue.Enqueue(0);
+                    }
+                }
+            }
+
+            return time;
+        }
+    }
+
 }
