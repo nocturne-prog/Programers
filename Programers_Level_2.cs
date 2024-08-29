@@ -2,7 +2,6 @@ using System.Text;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 
 
 public class Programers_Level_2
@@ -1131,6 +1130,63 @@ public class Programers_Level_2
             }
 
             return time;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/118667
+    public class s118667
+    {
+        public int solution(int[] queue1, int[] queue2)
+        {
+            long queue1Sum = 0, queue2Sum = 0;
+
+            foreach (var v in queue1)
+                queue1Sum += v;
+
+            foreach (var v in queue2)
+                queue2Sum += v;
+
+            long totalSum = queue1Sum + queue2Sum;
+            long targetSum = totalSum / 2;
+
+            if (totalSum % 2 != 0)
+                return -1;
+
+            int[] array = queue1.Concat(queue2).ToArray();
+            int leftIdx = 0, rightIdx = queue1.Length;
+            long currentSum = queue1Sum;
+            int answer = 0;
+
+            while (leftIdx < array.Length && rightIdx < array.Length)
+            {
+                if (currentSum == targetSum)
+                    return answer;
+
+                if (currentSum > targetSum)
+                {
+                    currentSum -= array[leftIdx++];
+                }
+                else
+                {
+                    currentSum += array[rightIdx++];
+                }
+
+                answer++;
+            }
+
+            return -1;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42839
+    public class s42839
+    {
+        public int solution(string numbers)
+        {
+            int answer = 0;
+            return answer;
         }
     }
 
