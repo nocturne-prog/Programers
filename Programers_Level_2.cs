@@ -1183,10 +1183,151 @@ public class Programers_Level_2
     //https://school.programmers.co.kr/learn/courses/30/lessons/42839
     public class s42839
     {
+        HashSet<int> numberList = new HashSet<int>();
         public int solution(string numbers)
         {
             int answer = 0;
+
+            CreateNumber("", numbers.ToCharArray(), new bool[numbers.Length]);
+
+            foreach (var v in numberList)
+            {
+                if (IsPrimeNumber(v) == true)
+                {
+                    answer++;
+                }
+            }
+
+
             return answer;
+        }
+
+        public void CreateNumber(string value, char[] numbers, bool[] visited)
+        {
+            if (value.Length > 0)
+            {
+                numberList.Add(int.Parse(value));
+            }
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (visited[i] == true)
+                    continue;
+
+                visited[i] = true;
+                CreateNumber(value + numbers[i], numbers, visited);
+                visited[i] = false;
+            }
+        }
+
+        public bool IsPrimeNumber(int num)
+        {
+            if (num <= 1)
+                return false;
+
+            if (num == 2)
+                return true;
+
+            if (num % 2 == 0)
+                return false;
+
+            int sqrt = (int)Math.Sqrt(num);
+            for (int i = 3; i <= sqrt; i += 2)
+            {
+                if (num % i == 0)
+                    return false;
+            }
+
+            return true;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/68936
+    public class s68936
+    {
+        int[] answer = new int[2];
+        public int[] solution(int[,] arr)
+        {
+            int length = arr.GetLength(0);
+            Compress(arr, 0, 0, length);
+
+            return answer;
+        }
+
+        public void Compress(int[,] arr, int x, int y, int size)
+        {
+            if (SameArea(arr, x, y, size) == true)
+            {
+                answer[arr[x, y]]++;
+            }
+            else
+            {
+                int newSize = size / 2;
+
+                Compress(arr, x, y, newSize);
+                Compress(arr, x, y + newSize, newSize);
+                Compress(arr, x + newSize, y, newSize);
+                Compress(arr, x + newSize, y + newSize, newSize);
+            }
+        }
+
+        public bool SameArea(int[,] arr, int x, int y, int size)
+        {
+            int value = arr[x, y];
+
+            for (int i = x; i < x + size; i++)
+            {
+                for (int m = y; m < y + size; m++)
+                {
+                    if (arr[i, m] != value)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42746
+    public class s42746
+    {
+        public string solution(int[] numbers)
+        {
+            List<(int idx, int value)> list = new List<(int idx, int value)>();
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                string nubmerText = numbers[i].ToString();
+                char[] numberCharArray = new char[6];
+
+                for (int m = 0; m < numberCharArray.Length; m++)
+                {
+                    if (m >= nubmerText.Length)
+                    {
+                        numberCharArray[m] = '0';
+                    }
+                    else
+                    {
+                        numberCharArray[m] = nubmerText[m];
+                    }
+                }
+
+                list.Add((i, int.Parse(numberCharArray)));
+            }
+
+            int[] sortedList = list.OrderByDescending(x => x.value)
+                                    .Select(x => x.idx)
+                                    .ToArray();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < sortedList.Length; i++)
+            {
+                sb.Append(numbers[sortedList[i]]);
+            }
+
+            return sb.ToString();
         }
     }
 

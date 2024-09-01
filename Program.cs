@@ -6,11 +6,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s118667 a = new Programers_Level_2.s118667();
+        Programers_Level_2.s42746 a = new Programers_Level_2.s42746();
         var v = a.solution(
-          [1000000000, 1000000000, 1000000000],
-          [1000000000, 1000000000,1000000000]
+           [3, 30, 34, 5, 9]
         );
+
         // PrintArray(v);
         Console.WriteLine(v);
     }
