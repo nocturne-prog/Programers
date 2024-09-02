@@ -1295,39 +1295,206 @@ public class Programers_Level_2
     {
         public string solution(int[] numbers)
         {
-            List<(int idx, int value)> list = new List<(int idx, int value)>();
+            List<string> list = new List<string>();
 
             for (int i = 0; i < numbers.Length; i++)
             {
-                string nubmerText = numbers[i].ToString();
-                char[] numberCharArray = new char[6];
+                list.Add(numbers[i].ToString());
+            }
 
-                for (int m = 0; m < numberCharArray.Length; m++)
+            list.Sort((x, y) => (y + x).CompareTo(x + y));
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var v in list)
+            {
+                sb.Append(v);
+            }
+
+            if (sb.ToString().StartsWith('0'))
+                return "0";
+
+            return sb.ToString();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/68645
+    public class s68645
+    {
+        public int[] solution(int n)
+        {
+            int[,] map = new int[n, n];
+            int dir = 0;
+            int[] dirRow = new int[] { 1, 0, -1 };
+            int[] dirCol = new int[] { 0, 1, -1 };
+            int row = 0, col = 0, number = 1;
+
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int m = i; m < map.GetLength(1); m++)
                 {
-                    if (m >= nubmerText.Length)
+                    map[row, col] = number++;
+
+                    int newRow = row + dirRow[dir];
+                    int newCol = col + dirCol[dir];
+
+                    if (newRow < 0 || newCol < 0 || newRow >= n || newCol >= n || map[newRow, newCol] != 0)
                     {
-                        numberCharArray[m] = '0';
+                        dir = (dir + 1) % 3;
+                        newRow = row + dirRow[dir];
+                        newCol = col + dirCol[dir];
                     }
-                    else
+
+                    row = newRow;
+                    col = newCol;
+                }
+            }
+
+            List<int> answer = new List<int>();
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int m = 0; m < map.GetLength(1); m++)
+                {
+                    if (map[i, m] == 0)
+                        continue;
+
+                    answer.Add(map[i, m]);
+                }
+            }
+
+            return answer.ToArray();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/178870
+    public class s178870
+    {
+        public int[] solution(int[] sequence, int k)
+        {
+            int start = 0, end = 0, minLength = int.MaxValue;
+            int sum = 0;
+            int a = 0, b = 0;
+
+            while (end < sequence.Length)
+            {
+                sum += sequence[end];
+
+                while (sum > k && start <= end)
+                {
+                    sum -= sequence[start];
+                    start++;
+                }
+
+                if (sum == k)
+                {
+                    int legnth = end - start + 1;
+
+                    if (legnth < minLength)
                     {
-                        numberCharArray[m] = nubmerText[m];
+                        minLength = legnth;
+                        a = start;
+                        b = end;
                     }
                 }
 
-                list.Add((i, int.Parse(numberCharArray)));
+                end++;
             }
 
-            int[] sortedList = list.OrderByDescending(x => x.value)
-                                    .Select(x => x.idx)
-                                    .ToArray();
+            return new int[] { a, b };
+        }
+    }
 
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < sortedList.Length; i++)
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42883
+    public class s42883
+    {
+        public string solution(string number, int k)
+        {
+            Stack<char> stack = new Stack<char>();
+
+            for (int i = 0; i < number.Length; i++)
             {
-                sb.Append(numbers[sortedList[i]]);
+                char value = number[i];
+
+                while (stack.Count > 0 && k > 0 && stack.Peek() < value)
+                {
+                    stack.Pop();
+                    k--;
+                }
+
+                stack.Push(value);
             }
 
-            return sb.ToString();
+            while (k > 0)
+            {
+                stack.Pop();
+                k--;
+            }
+
+            char[] resultArray = stack.ToArray();
+            Array.Reverse(resultArray);
+            return new string(resultArray);
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/155651
+    public class s155651
+    {
+        public int solution(string[,] book_time)
+        {
+            List<(DateTime enter, DateTime exit)> list = new List<(DateTime enter, DateTime exit)>();
+
+            for (int i = 0; i < book_time.GetLength(0); i++)
+            {
+                DateTime enter = DateTime.Parse(book_time[i, 0]);
+                DateTime exit = DateTime.Parse(book_time[i, 1]).AddMinutes(10);
+
+                list.Add((enter, exit));
+            }
+
+            list = list.OrderBy(x => x.enter).ToList();
+
+            List<int> room = new List<int>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                DateTime cTime = list[i].enter;
+
+                int roomIdx = -1;
+
+                for (int m = 0; m < room.Count; m++)
+                {
+                    DateTime extiTime = list[room[m]].exit;
+
+                    if (cTime >= extiTime)
+                    {
+                        room[m] = i;
+                        roomIdx = m;
+                        break;
+                    }
+                }
+
+                if (roomIdx < 0)
+                    room.Add(i);
+            }
+
+            return room.Count;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/152996
+    public class s152996
+    {
+        public long solution(int[] weights)
+        {
+            long answer = 0;
+            return answer;
         }
     }
 

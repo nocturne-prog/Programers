@@ -1,14 +1,19 @@
-﻿namespace programers;
-using System;
+﻿using System;
 using System.Text;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s42746 a = new Programers_Level_2.s42746();
+        Programers_Level_2.s155651 a = new Programers_Level_2.s155651();
         var v = a.solution(
-           [3, 30, 34, 5, 9]
+            new string[,] {
+                {"15:00", "17:00"},
+                {"16:40", "18:20"},
+                {"14:20", "15:20"},
+                {"14:10", "19:20"},
+                {"18:20", "21:20"}
+            }
         );
 
         // PrintArray(v);
