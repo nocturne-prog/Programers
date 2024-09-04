@@ -1494,8 +1494,186 @@ public class Programers_Level_2
         public long solution(int[] weights)
         {
             long answer = 0;
+
+            Dictionary<int, long> count = new Dictionary<int, long>();
+            double[] ratios = new double[] {
+                2.0/3.0,
+                2.0/4.0,
+                3.0/2.0,
+                3.0/4.0,
+                4.0/2.0,
+                4.0/3.0
+            };
+
+            foreach (var weight in weights)
+            {
+                if (count.ContainsKey(weight) == false)
+                {
+                    count.Add(weight, 0);
+                }
+
+                count[weight]++;
+            }
+
+            foreach (var weight in weights)
+            {
+                if (count[weight] == 0)
+                    continue;
+
+                if (count[weight] > 1)
+                {
+                    answer += (count[weight] * (count[weight] - 1)) / 2;
+                }
+
+                foreach (var ratio in ratios)
+                {
+                    double other = weight * ratio;
+
+                    if (other != weight && other % 1 == 0 && count.ContainsKey((int)other) == true)
+                    {
+                        answer += count[weight] * count[(int)other];
+                    }
+                }
+
+                count[weight] = 0;
+            }
+
             return answer;
         }
     }
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/148653
+    public class s148653
+    {
+        public int solution(int storey)
+        {
+            int answer = 0;
+
+            while (storey > 0)
+            {
+                int value = storey % 10;
+                storey /= 10;
+
+                if (value > 5 || (value == 5 && storey % 10 >= 5))
+                {
+                    answer += (10 - value);
+                    storey++;
+                }
+                else
+                {
+                    answer += value;
+                }
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/135807
+    public class s135807
+    {
+        public int solution(int[] arrayA, int[] arrayB)
+        {
+            int a = GetGCD(arrayA);
+            int b = GetGCD(arrayB);
+
+            int resultA = CanDivide(arrayB, a) ? a : 0;
+            int resultB = CanDivide(arrayA, b) ? b : 0;
+
+            return Math.Max(resultA, resultB);
+        }
+
+        private int GCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        private int GetGCD(int[] array)
+        {
+            int gcd = array[0];
+            for (int i = 1; i < array.Length; i++)
+            {
+                gcd = GCD(gcd, array[i]);
+            }
+            return gcd;
+        }
+
+        private bool CanDivide(int[] array, int gcd)
+        {
+            foreach (int num in array)
+            {
+                if (num % gcd == 0) return false;
+            }
+            return true;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/86971
+    public class s86971
+    {
+        public int solution(int n, int[,] wires)
+        {
+            int answer = int.MaxValue;
+
+            for (int i = 0; i < wires.GetLength(0); i++)
+            {
+                int a = wires[i, 0];
+                int b = wires[i, 1];
+
+                int countA = GetCount(i, a, wires);
+                int countB = GetCount(i, b, wires);
+
+                int gap = Math.Abs(countA - countB);
+                answer = Math.Min(answer, gap);
+            }
+
+            return answer > n ? 0 : answer;
+        }
+
+        private int GetCount(int startIdx, int start, int[,] wires)
+        {
+            int count = 0;
+
+            List<(int, int)> list = new List<(int, int)>();
+
+            for (int i = 0; i < wires.GetLength(0); i++)
+            {
+                if (i == startIdx)
+                    continue;
+
+                list.Add((wires[i, 0], wires[i, 1]));
+            }
+
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                count++;
+
+                int des = queue.Dequeue();
+                var next = list.Where(x => x.Item1 == des || x.Item2 == des).ToList();
+
+                if (next != null)
+                {
+                    foreach (var v in next)
+                    {
+                        list.Remove(v);
+                        queue.Enqueue(des == v.Item1 ? v.Item2 : v.Item1);
+                    }
+                }
+            }
+
+            return count;
+        }
+    }
 }

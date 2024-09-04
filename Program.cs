@@ -5,16 +5,18 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s155651 a = new Programers_Level_2.s155651();
-        var v = a.solution(
-            new string[,] {
-                {"15:00", "17:00"},
-                {"16:40", "18:20"},
-                {"14:20", "15:20"},
-                {"14:10", "19:20"},
-                {"18:20", "21:20"}
-            }
-        );
+        Programers_Level_2.s86971 a = new Programers_Level_2.s86971();
+        var v = a.solution(9,
+            new int[,] {
+                {1,3},
+                {2,3},
+                {3,4},
+                {4,5},
+                {4,6},
+                {4,7},
+                {7,8},
+                {7,9}
+            });
 
         // PrintArray(v);
         Console.WriteLine(v);
