@@ -5,19 +5,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s86971 a = new Programers_Level_2.s86971();
-        var v = a.solution(9,
-            new int[,] {
-                {1,3},
-                {2,3},
-                {3,4},
-                {4,5},
-                {4,6},
-                {4,7},
-                {7,8},
-                {7,9}
-            });
-
+        Programers_Level_2.s154540 a = new Programers_Level_2.s154540();
+        var v = a.solution(
+["X591X", "X1X5X", "X231X", "1XXX1"]
+        );
         // PrintArray(v);
         Console.WriteLine(v);
     }

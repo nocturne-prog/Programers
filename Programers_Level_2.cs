@@ -1676,4 +1676,283 @@ public class Programers_Level_2
             return count;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12978
+    public class s12978
+    {
+        HashSet<int> list = new HashSet<int>();
+
+        public int solution(int N, int[,] road, int K)
+        {
+            List<(int, int, int)> roadList = new List<(int, int, int)>();
+
+            for (int i = 0; i < road.GetLength(0); i++)
+            {
+                roadList.Add((road[i, 0], road[i, 1], road[i, 2]));
+                roadList.Add((road[i, 1], road[i, 0], road[i, 2]));
+            }
+
+            bool[] visited = new bool[N];
+            visited[0] = true;
+            DFS(roadList, 1, K, 0, visited);
+
+            list.Add(1);
+
+            return list.Count;
+        }
+
+        public void DFS(List<(int, int, int)> road, int cPoint, int K, int tLength, bool[] visited)
+        {
+            for (int i = 0; i < road.Count; i++)
+            {
+                int startPoint = road[i].Item1;
+                int endPoint = road[i].Item2;
+                int length = road[i].Item3;
+
+                if (startPoint != cPoint || visited[endPoint - 1] == true)
+                    continue;
+
+                if (tLength + length <= K)
+                {
+                    visited[endPoint - 1] = true;
+                    list.Add(endPoint);
+                    DFS(road, endPoint, K, tLength + length, visited);
+                    visited[endPoint - 1] = false;
+                }
+            }
+        }
+
+        public int solution2(int N, int[,] road, int K)
+        {
+            List<(int, int)>[] list = new List<(int, int)>[N + 1];
+
+            for (int i = 0; i < N + 1; i++)
+            {
+                list[i] = new List<(int, int)>();
+            }
+
+            for (int i = 0; i < road.GetLength(0); i++)
+            {
+                int a = road[i, 0];
+                int b = road[i, 1];
+                int c = road[i, 2];
+
+                list[a].Add((b, c));
+                list[b].Add((a, c));
+            }
+
+            int[] dist = new int[N + 1];
+            Array.Fill(dist, int.MaxValue);
+            dist[1] = 0;
+
+            // PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            // pq.Enqueue(1, 0);
+
+            List<(int, int)> pq = new List<(int, int)>();
+            pq.Add((1, 0));
+
+            while (pq.Count > 0)
+            {
+                var item = pq[0];
+                pq.Remove(item);
+
+                foreach (var v in list[item.Item1])
+                {
+                    int nextDist = dist[item.Item1] + v.Item2;
+
+                    if (nextDist < dist[v.Item1])
+                    {
+                        dist[v.Item1] = nextDist;
+                        pq.Add((v.Item1, nextDist));
+
+                        pq = pq.OrderBy(x => x.Item2).ToList();
+                    }
+                }
+            }
+
+            int answer = 0;
+
+            for (int i = 1; i < dist.Length; i++)
+            {
+                if (dist[i] <= K)
+                    answer++;
+            }
+
+            return answer++;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/159993
+    public class s159993
+    {
+        public int solution(string[] maps)
+        {
+            char[,] map = new char[maps.Length, maps[0].Length];
+
+            int startRow = 0, startCol = 0, leverRow = 0, leverCol = 0, exitRow = 0, exitCol = 0;
+
+            for (int row = 0; row < maps.Length; row++)
+            {
+                for (int col = 0; col < maps[row].Length; col++)
+                {
+                    char c = maps[row][col];
+
+                    if (c.Equals('S') == true)
+                    {
+                        startRow = row;
+                        startCol = col;
+                    }
+                    else if (c.Equals('E') == true)
+                    {
+                        exitRow = row;
+                        exitCol = col;
+                    }
+                    else if (c.Equals('L') == true)
+                    {
+                        leverRow = row;
+                        leverCol = col;
+                    }
+
+                    map[row, col] = c;
+                }
+            }
+
+            int goLever = GetLength(map, startRow, startCol, leverRow, leverCol);
+            int goExit = GetLength(map, leverRow, leverCol, exitRow, exitCol);
+
+            if (goLever < 0 || goExit < 0)
+                return -1;
+
+            return goLever + goExit;
+        }
+
+        public int GetLength(char[,] maps, int cRow, int cCol, int targetRow, int targetCol)
+        {
+            int[] dRow = new int[] { -1, 1, 0, 0 };
+            int[] dCol = new int[] { 0, 0, -1, 1 };
+
+            bool[,] visited = new bool[maps.GetLength(0), maps.GetLength(1)];
+            visited[cRow, cCol] = true;
+
+            Queue<(int row, int col, int count)> queue = new Queue<(int row, int col, int count)>();
+            queue.Enqueue((cRow, cCol, 0));
+
+            while (queue.Count > 0)
+            {
+                var (r, c, t) = queue.Dequeue();
+
+                if (r == targetRow && c == targetCol)
+                {
+                    return t;
+                }
+
+                for (int i = 0; i < dRow.Length; i++)
+                {
+                    int dr = dRow[i];
+                    int dc = dCol[i];
+
+                    int newRow = r + dr;
+                    int newCol = c + dc;
+
+                    if (newRow >= 0 && newCol >= 0 && newRow < maps.GetLength(0) && newCol < maps.GetLength(1) && visited[newRow, newCol] == false && maps[newRow, newCol] != 'X')
+                    {
+                        queue.Enqueue((newRow, newCol, t + 1));
+                        visited[newRow, newCol] = true;
+                    }
+                }
+            }
+
+            return -1;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/154540
+    public class s154540
+    {
+        public int[] solution(string[] maps)
+        {
+            char[,] map = new char[maps.Length, maps[0].Length];
+
+            for (int row = 0; row < maps.Length; row++)
+            {
+                for (int col = 0; col < maps[row].Length; col++)
+                {
+                    map[row, col] = maps[row][col];
+                }
+            }
+
+            bool[,] visited = new bool[maps.Length, maps[0].Length];
+            List<int> answer = new List<int>();
+
+            for (int row = 0; row < maps.GetLength(0); row++)
+            {
+                for (int col = 0; col < maps[row].Length; col++)
+                {
+                    if (visited[row, col] == true || map[row, col] == 'X')
+                        continue;
+
+                    answer.Add(Plus(map, row, col, visited));
+                }
+            }
+
+            if (answer.Count == 0)
+            {
+                return new int[] { -1 };
+            }
+            else
+            {
+                return answer.OrderBy(x => x).ToArray();
+            }
+        }
+
+        public int Plus(char[,] map, int row, int col, bool[,] visited)
+        {
+            int[] dRow = new int[] { -1, 1, 0, 0 };
+            int[] dCol = new int[] { 0, 0, -1, 1 };
+
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+            queue.Enqueue((row, col));
+
+            int result = map[row, col] - '0';
+
+            visited[row, col] = true;
+
+            while (queue.Count > 0)
+            {
+                var (r, c) = queue.Dequeue();
+
+                for (int i = 0; i < dRow.Length; i++)
+                {
+                    int newRow = r + dRow[i];
+                    int newCol = c + dCol[i];
+
+                    if (newRow >= 0 && newCol >= 0 &&
+                        newRow < map.GetLength(0) && newCol < map.GetLength(1) &&
+                        visited[newRow, newCol] == false &&
+                        map[newRow, newCol] != 'X')
+                    {
+                        queue.Enqueue((newRow, newCol));
+                        result += map[newRow, newCol] - '0';
+                        visited[newRow, newCol] = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/77485
+    public class s77485
+    {
+        public int[] solution(int rows, int columns, int[,] queries)
+        {
+            int[] answer = new int[] { };
+            return answer;
+        }
+    }
 }
