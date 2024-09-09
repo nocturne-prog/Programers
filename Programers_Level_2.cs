@@ -1951,8 +1951,305 @@ public class Programers_Level_2
     {
         public int[] solution(int rows, int columns, int[,] queries)
         {
-            int[] answer = new int[] { };
+            List<int> answer = new List<int>();
+            int[,] map = new int[rows, columns];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int m = 0; m < map.GetLength(1); m++)
+                {
+                    map[i, m] = (i * map.GetLength(1)) + m + 1;
+                }
+            }
+
+            for (int i = 0; i < queries.GetLength(0); i++)
+            {
+                int rowCount = queries[i, 2] - queries[i, 0];
+                int colCount = queries[i, 3] - queries[i, 1];
+
+                List<(int, int)> dirList = new List<(int, int)>();
+
+                for (int m = 0; m < colCount; m++)
+                {
+                    dirList.Add((0, 1));
+                }
+
+                for (int m = 0; m < rowCount; m++)
+                {
+                    dirList.Add((1, 0));
+                }
+
+                for (int m = 0; m < colCount; m++)
+                {
+                    dirList.Add((0, -1));
+                }
+
+                for (int m = 0; m < rowCount; m++)
+                {
+                    dirList.Add((-1, 0));
+                }
+
+                int row = queries[i, 0] - 1;
+                int col = queries[i, 1] - 1;
+
+                List<(int, int, int)> list = new List<(int, int, int)>();
+
+                for (int m = 0; m < dirList.Count; m++)
+                {
+                    var (r, c) = dirList[m];
+
+                    row += r;
+                    col += c;
+
+                    int value = map[row, col];
+                    list.Add((row, col, value));
+                }
+
+                for (int m = 0; m < list.Count; m++)
+                {
+                    var (r, c, v) = list[m];
+                    int targetIdx = m - 1;
+
+                    if (targetIdx < 0)
+                        targetIdx += list.Count;
+
+                    map[r, c] = list[targetIdx].Item3;
+                }
+
+                answer.Add(list.Min(x => x.Item3));
+            }
+
+            return answer.ToArray();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/169199
+    public class s169199
+    {
+        public int solution(string[] board)
+        {
+            char[,] map = new char[board.Length, board[0].Length];
+            bool[,] visited = new bool[board.Length, board[0].Length];
+            int startRow = 0, startCol = 0, endRow = 0, endCol = 0;
+
+            for (int row = 0; row < board.Length; row++)
+            {
+                for (int col = 0; col < board[row].Length; col++)
+                {
+                    map[row, col] = board[row][col];
+
+                    if (map[row, col].Equals('R'))
+                    {
+                        startRow = row;
+                        startCol = col;
+                    }
+                    else if (map[row, col].Equals('G'))
+                    {
+                        endRow = row;
+                        endCol = col;
+                    }
+                }
+            }
+
+            int[] dRow = new int[] { -1, 1, 0, 0 };
+            int[] dCol = new int[] { 0, 0, -1, 1 };
+
+            Queue<(int r, int c, int d, int count)> queue = new Queue<(int r, int c, int d, int count)>();
+            queue.Enqueue((startRow, startCol, -1, 0));
+
+            while (queue.Count > 0)
+            {
+                var (currentRow, currentCol, currentDir, step) = queue.Dequeue();
+                visited[currentRow, currentCol] = true;
+
+                if (currentRow == endRow && currentCol == endCol)
+                    return step;
+
+                for (int i = 0; i < dRow.Length; i++)
+                {
+                    if (currentDir == i)
+                        continue;
+
+                    int newRow = currentRow + dRow[i];
+                    int newCol = currentCol + dCol[i];
+                    bool isMove = false;
+
+                    while (newRow >= 0 && newCol >= 0 && newRow < map.GetLength(0) && newCol < map.GetLength(1) &&
+                            map[newRow, newCol].Equals('D') == false)
+                    {
+                        newRow += dRow[i];
+                        newCol += dCol[i];
+                        isMove = true;
+                    }
+
+                    if (isMove)
+                    {
+                        int r = newRow - dRow[i];
+                        int c = newCol - dCol[i];
+
+                        if (visited[r, c] == false)
+                        {
+                            queue.Enqueue((r, c, i, step + 1));
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/147354
+    public class s147354
+    {
+        public int solution(int[,] data, int col, int row_begin, int row_end)
+        {
+            int[][] dataList = new int[data.GetLength(0)][];
+            List<(int idx, int first, int order)> sortValue = new List<(int idx, int first, int order)>();
+
+            for (int i = 0; i < dataList.Length; i++)
+            {
+                dataList[i] = new int[data.GetLength(1)];
+
+                for (int m = 0; m < dataList[i].Length; m++)
+                {
+                    dataList[i][m] = data[i, m];
+                }
+
+                sortValue.Add((i, dataList[i][0], dataList[i][col - 1]));
+            }
+
+            sortValue = sortValue.OrderBy(x => x.order).ThenByDescending(x => x.first).ToList();
+
+            int[][] sortedList = new int[dataList.Length][];
+
+            for (int i = 0; i < sortValue.Count; i++)
+            {
+                sortedList[i] = dataList[sortValue[i].idx];
+            }
+
+            int answer = 0;
+
+            for (int i = row_begin - 1; i <= row_end - 1; i++)
+            {
+                int[] array = sortedList[i];
+                int sum = 0;
+                for (int m = 0; m < array.Length; m++)
+                {
+                    sum += array[m] % (i + 1);
+                }
+
+                answer ^= sum;
+            }
+
             return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/81302
+    public class s81302
+    {
+        public int[] solution(string[,] places)
+        {
+            char[][,] map = new char[places.GetLength(0)][,];
+
+            for (int i = 0; i < places.GetLength(0); i++)
+            {
+                char[,] smallMap = new char[places.GetLength(1), places[i, 0].Length];
+
+                for (int m = 0; m < smallMap.GetLength(0); m++)
+                {
+                    for (int h = 0; h < smallMap.GetLength(1); h++)
+                    {
+                        smallMap[m, h] = places[i, m][h];
+                    }
+
+                    map[i] = smallMap;
+                }
+            }
+
+            int[] answer = new int[map.Length];
+            for (int i = 0; i < map.Length; i++)
+            {
+                answer[i] = CheckMap(map[i]) ? 1 : 0;
+            }
+
+            return answer;
+        }
+
+        public bool CheckMap(char[,] map)
+        {
+            bool[,] check = new bool[map.GetLength(0), map.GetLength(1)];
+
+            for (int m = 0; m < map.GetLength(0); m++)
+            {
+                for (int h = 0; h < map.GetLength(1); h++)
+                {
+                    if (map[m, h].Equals('P') == true && check[m, h] == false)
+                    {
+                        check[m, h] = true;
+                        bool isAround = CheckAround(map, ref check, m, h);
+
+                        if (isAround == false)
+                            return false;
+                    }
+                }
+            }
+
+            return true;
+
+        }
+
+        public bool CheckAround(char[,] map, ref bool[,] check, int row, int col)
+        {
+            int[] dRow = new int[] { -1, -1, -1, 0, 0, 0, 1, 1, 1, -2, 2, 0, 0 };
+            int[] dCol = new int[] { -1, 0, 1, -1, 0, 1, -1, 0, 1, 0, 0, -2, 2 };
+
+            for (int i = 0; i < dRow.Length; i++)
+            {
+                if (i == 4)
+                    continue;
+
+                int r = row + dRow[i];
+                int c = col + dCol[i];
+
+                if (r < 0 || c < 0 || r >= map.GetLength(0) || c >= map.GetLength(1) || check[r, c] == true)
+                    continue;
+
+                if (map[r, c].Equals('P') == true)
+                {
+                    
+                    if (i % 2 == 1)
+                    {
+                        check[r, c] = true;
+                        return false;
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            return (map[row + dRow[1], col + dCol[1]].Equals('X') && map[row + dRow[3], col + dCol[3]].Equals('X')) == false;
+                        }
+                        else if (i == 2)
+                        {
+                            return (map[row + dRow[1], col + dCol[1]].Equals('X') && map[row + dRow[5], col + dCol[5]].Equals('X')) == false;
+                        }
+                        else if (i == 6)
+                        {
+                            return (map[row + dRow[3], col + dCol[3]].Equals('X') && map[row + dRow[7], col + dCol[7]].Equals('X')) == false;
+                        }
+                        else
+                        {
+                            return (map[row + dRow[5], col + dCol[5]].Equals('X') && map[row + dRow[7], col + dCol[7]].Equals('X')) == false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

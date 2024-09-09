@@ -5,12 +5,17 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s154540 a = new Programers_Level_2.s154540();
+        Programers_Level_2.s81302 a = new Programers_Level_2.s81302();
         var v = a.solution(
-["X591X", "X1X5X", "X231X", "1XXX1"]
+            new string[,]{
+            { "POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"},
+            { "POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"},
+            { "PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"},
+            { "OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"},
+            { "PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"}}
         );
-        // PrintArray(v);
-        Console.WriteLine(v);
+        PrintArray(v);
+        // Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)
