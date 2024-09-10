@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class Programers_Level_2
 {
     //최대공약수 구하기
@@ -2205,8 +2204,8 @@ public class Programers_Level_2
 
         public bool CheckAround(char[,] map, ref bool[,] check, int row, int col)
         {
-            int[] dRow = new int[] { -1, -1, -1, 0, 0, 0, 1, 1, 1, -2, 2, 0, 0 };
-            int[] dCol = new int[] { -1, 0, 1, -1, 0, 1, -1, 0, 1, 0, 0, -2, 2 };
+            int[] dRow = new int[] { -2, -1, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 2 };
+            int[] dCol = new int[] { 0, -1, 0, 1, -2, -1, 0, 1, 2, -1, 0, 1, 0 };
 
             for (int i = 0; i < dRow.Length; i++)
             {
@@ -2221,35 +2220,187 @@ public class Programers_Level_2
 
                 if (map[r, c].Equals('P') == true)
                 {
-                    
-                    if (i % 2 == 1)
+                    switch (i)
                     {
-                        check[r, c] = true;
-                        return false;
-                    }
-                    else
-                    {
-                        if (i == 0)
-                        {
-                            return (map[row + dRow[1], col + dCol[1]].Equals('X') && map[row + dRow[3], col + dCol[3]].Equals('X')) == false;
-                        }
-                        else if (i == 2)
-                        {
-                            return (map[row + dRow[1], col + dCol[1]].Equals('X') && map[row + dRow[5], col + dCol[5]].Equals('X')) == false;
-                        }
-                        else if (i == 6)
-                        {
-                            return (map[row + dRow[3], col + dCol[3]].Equals('X') && map[row + dRow[7], col + dCol[7]].Equals('X')) == false;
-                        }
-                        else
-                        {
-                            return (map[row + dRow[5], col + dCol[5]].Equals('X') && map[row + dRow[7], col + dCol[7]].Equals('X')) == false;
-                        }
+                        case 2:
+                        case 5:
+                        case 7:
+                        case 10:
+                            check[r, c] = true;
+                            return false;
+
+                        case 1:  // 2, 4
+                        case 3:  // 2, 6
+                        case 9:  // 5, 10
+                        case 11: // 7, 10
+                            int check1 = i == 1 || i == 3 ? 2 : i == 9 ? 5 : 7;
+                            int check2 = i == 1 ? 4 : i == 3 ? 6 : i == 9 ? 10 : 10;
+
+                            if (map[row + dRow[check1], col + dCol[check1]].Equals('X') == false || map[row + dRow[check2], col + dCol[check2]].Equals('X') == false)
+                            {
+                                return false;
+                            }
+
+                            break;
+
+                        case 0: // 2
+                        case 4: // 5
+                        case 8: // 7
+                        case 12: // 10
+                            int check3 = i == 0 ? 2 : i == 4 ? 5 : i == 8 ? 7 : 10;
+                            if (map[row + dRow[check3], col + dCol[check3]].Equals('X') == false)
+                            {
+                                return false;
+                            }
+
+                            break;
                     }
                 }
             }
 
             return true;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/142085
+    public class s142085
+    {
+        public int solution(int n, int k, int[] enemy)
+        {
+            int answer = 0;
+            SortedSet<(int value, int index)> killedEnemy = new SortedSet<(int, int)>();
+            int index = 0;
+
+            for (int i = 0; i < enemy.Length; i++)
+            {
+                int e = enemy[i];
+                var current = (e, index++);
+                killedEnemy.Add(current);
+                if (n >= e)
+                {
+                    n -= e;
+                }
+                else if (k > 0)
+                {
+                    var maxEnemy = killedEnemy.Max;
+
+                    if (maxEnemy.value > e)
+                    {
+                        n += maxEnemy.value;
+                        n -= e;
+                        killedEnemy.Remove(maxEnemy);
+                    }
+                    else
+                    {
+                        killedEnemy.Remove(current);
+                    }
+
+                    k--;
+                }
+                else
+                {
+                    break;
+                }
+
+                answer++;
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/134239
+    public class s134239
+    {
+        public double[] solution(int k, int[,] ranges)
+        {
+            List<int> sequence = new List<int>();
+            sequence.Add(k);
+
+            while (k > 1)
+            {
+                if (k % 2 == 1)
+                {
+                    k = (k * 3) + 1;
+                }
+                else
+                {
+                    k /= 2;
+                }
+
+                sequence.Add(k);
+            }
+
+            List<double> areas = new List<double>();
+
+            for (int i = 0; i < sequence.Count - 1; i++)
+            {
+                double height = sequence[i];
+                double height2 = sequence[i + 1];
+
+                areas.Add((height + height2) / 2f);
+            }
+
+            List<double> answer = new List<double>();
+
+            for (int i = 0; i < ranges.GetLength(0); i++)
+            {
+                int a = ranges[i, 0];
+                int b = ranges[i, 1];
+                int end = sequence.Count + b - 1;
+
+                if (a > end)
+                {
+                    answer.Add(-1.0);
+                }
+                else
+                {
+                    double sum = 0;
+                    for (int m = a; m < end; m++)
+                    {
+                        sum += areas[m];
+                    }
+                    answer.Add(sum);
+                }
+            }
+
+            return answer.ToArray();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/62048
+    public class s62048
+    {
+        /**
+            1.	전체 정사각형 수: 직사각형 전체의 1cm x 1cm 정사각형의 개수는 W * H입니다.
+	        2.	대각선에 의해 잘린 정사각형 수:
+	            •	직사각형의 대각선이 지나가는 정사각형의 수는 W + H - GCD(W, H)입니다.
+	            •	여기서, GCD(W, H)는 W와 H의 최대공약수로, 대각선이 지나가면서 정확히 한 번 지나가는 정사각형들을 제외하기 위해 사용됩니다.
+	        3.	사용 가능한 정사각형 수:
+	            •	전체 정사각형의 개수에서 대각선에 의해 잘린 정사각형의 개수를 뺀 값을 구합니다.
+	            •	공식: Result = W * H - (W + H - GCD(W, H)).
+        **/
+
+        public long solution(int w, int h)
+        {
+            long gcd = GCD(w, h);
+            long total = (long)w * h;
+            long unusable = w + h - gcd;
+            return total - unusable;
+        }
+
+        private long GCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
         }
     }
 }
