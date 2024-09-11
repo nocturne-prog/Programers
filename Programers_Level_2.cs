@@ -2523,10 +2523,11 @@ public class Programers_Level_2
     {
         public int[] solution(int[,] users, int[] emoticons)
         {
-            float[] discountArray = new float[] { 0.9f, 0.8f, 0.7f, 0.6f };
-            List<float[]> allCombinations = new List<float[]>();
+            int[] discountArray = new int[] { 10, 20, 30, 40 };
+            List<int[]> allCombinations = new List<int[]>();
+            int[] answer = new int[2];
 
-            GenerateCombinations(discountArray, new List<float>(), emoticons.Length, allCombinations);
+            GenerateCombinations(discountArray, new List<int>(), emoticons.Length, allCombinations);
 
             for (int i = 0; i < allCombinations.Count; i++)
             {
@@ -2537,31 +2538,41 @@ public class Programers_Level_2
                 {
                     int wantDiscount = users[m, 0];
                     int amount = users[m, 1];
-
+                    
                     int totalPrice = 0;
                     for (int h = 0; h < emoticons.Length; h++)
                     {
-                        if (wantDiscount < allCombinations[i][h])
+                        if (wantDiscount > allCombinations[i][h])
                             continue;
 
-                        totalPrice += (int)(discountArray[h] * emoticons[h]);
+                        totalPrice += (int)(emoticons[h] * ((100 - allCombinations[i][h]) / 100f));
                     }
 
                     if (totalPrice >= amount)
                     {
                         maxUser++;
+                    }
+                    else
+                    {
                         maxSales += totalPrice;
                     }
                 }
 
-                Console.WriteLine($"{maxUser} || {maxSales}");
+                if(maxUser > answer[0])
+                {
+                    answer[0] = maxUser;
+                    answer[1] = maxSales;
+                }
+                else if(maxUser == answer[0] && maxSales > answer[1])
+                {
+                    answer[1] = maxSales;
+                }
             }
 
-            int[] answer = new int[] { };
             return answer;
         }
 
-        private void GenerateCombinations(float[] array, List<float> current, int length, List<float[]> result)
+        private void GenerateCombinations(int[] array, List<int> current, int length, List<int[]> result)
         {
             if (current.Count == length)
             {
@@ -2576,7 +2587,6 @@ public class Programers_Level_2
                 current.RemoveAt(current.Count - 1);
             }
         }
-
 
     }
 }

@@ -18,8 +18,8 @@ class Program
             },
             [1300, 1500, 1600, 4900]
         );
-        // PrintArray(v);
-        Console.WriteLine(v);
+        PrintArray(v);
+        // Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)
