@@ -2403,4 +2403,180 @@ public class Programers_Level_2
             return a;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/172927
+    public class s172927
+    {
+        public int solution(int[] picks, string[] minerals)
+        {
+            List<List<string>> group = new List<List<string>>();
+
+            int count = Math.Min(picks.Sum() * 5, minerals.Length);
+            List<string> tempList = new List<string>();
+
+            for (int i = 0; i < count; i += 5)
+            {
+                group.Add(minerals.Skip(i).Take(5).ToList());
+            }
+
+            List<(int diamond, int iron, int stone)> fatigueList = new List<(int diamond, int iron, int stone)>();
+
+            for (int i = 0; i < group.Count; i++)
+            {
+                int fatigueD = CalculateFatigue(group[i], "diamond");
+                int fatigueI = CalculateFatigue(group[i], "iron");
+                int fatigueS = CalculateFatigue(group[i], "stone");
+
+                fatigueList.Add((fatigueD, fatigueI, fatigueS));
+            }
+
+            fatigueList = fatigueList
+                            .OrderByDescending(x => x.stone)
+                            .ThenByDescending(x => x.iron)
+                            .ThenByDescending(x => x.diamond)
+                            .ToList();
+
+            int answer = 0;
+            for (int i = 0; i < fatigueList.Count; i++)
+            {
+                var (diamond, iron, stone) = fatigueList[i];
+
+                if (picks[0] > 0)
+                {
+                    answer += diamond;
+                    picks[0]--;
+                }
+                else if (picks[1] > 0)
+                {
+                    answer += iron;
+                    picks[1]--;
+                }
+                else if (picks[2] > 0)
+                {
+                    answer += stone;
+                    picks[2]--;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return answer;
+        }
+
+        private int CalculateFatigue(List<string> minerals, string pick)
+        {
+            int value = 0;
+
+            for (int i = 0; i < minerals.Count; i++)
+            {
+                if (pick.Equals("diamond"))
+                {
+                    value++;
+                }
+                else if (pick.Equals("iron"))
+                {
+                    switch (minerals[i])
+                    {
+                        case "diamond": value += 5; break;
+                        default: value++; break;
+                    }
+                }
+                else
+                {
+                    switch (minerals[i])
+                    {
+                        case "diamond": value += 25; break;
+                        case "iron": value += 5; break;
+                        default: value++; break;
+                    }
+                }
+            }
+
+            return value;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/140107
+    public class s140107
+    {
+        public long solution(int k, int d)
+        {
+            long answer = 0;
+
+            for (int i = 0; i <= d; i += k)
+            {
+                int maxY = (int)Math.Sqrt((long)d * d - (long)i * i);
+                answer += (maxY / k) + 1;
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/150368
+    public class s150368
+    {
+        public int[] solution(int[,] users, int[] emoticons)
+        {
+            float[] discountArray = new float[] { 0.9f, 0.8f, 0.7f, 0.6f };
+            List<float[]> allCombinations = new List<float[]>();
+
+            GenerateCombinations(discountArray, new List<float>(), emoticons.Length, allCombinations);
+
+            for (int i = 0; i < allCombinations.Count; i++)
+            {
+                int maxUser = 0;
+                int maxSales = 0;
+
+                for (int m = 0; m < users.GetLength(0); m++)
+                {
+                    int wantDiscount = users[m, 0];
+                    int amount = users[m, 1];
+
+                    int totalPrice = 0;
+                    for (int h = 0; h < emoticons.Length; h++)
+                    {
+                        if (wantDiscount < allCombinations[i][h])
+                            continue;
+
+                        totalPrice += (int)(discountArray[h] * emoticons[h]);
+                    }
+
+                    if (totalPrice >= amount)
+                    {
+                        maxUser++;
+                        maxSales += totalPrice;
+                    }
+                }
+
+                Console.WriteLine($"{maxUser} || {maxSales}");
+            }
+
+            int[] answer = new int[] { };
+            return answer;
+        }
+
+        private void GenerateCombinations(float[] array, List<float> current, int length, List<float[]> result)
+        {
+            if (current.Count == length)
+            {
+                result.Add(current.ToArray());
+                return;
+            }
+
+            foreach (var num in array)
+            {
+                current.Add(num);
+                GenerateCombinations(array, current, length, result);
+                current.RemoveAt(current.Count - 1);
+            }
+        }
+
+
+    }
 }
