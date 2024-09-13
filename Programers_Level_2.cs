@@ -2538,7 +2538,7 @@ public class Programers_Level_2
                 {
                     int wantDiscount = users[m, 0];
                     int amount = users[m, 1];
-                    
+
                     int totalPrice = 0;
                     for (int h = 0; h < emoticons.Length; h++)
                     {
@@ -2558,12 +2558,12 @@ public class Programers_Level_2
                     }
                 }
 
-                if(maxUser > answer[0])
+                if (maxUser > answer[0])
                 {
                     answer[0] = maxUser;
                     answer[1] = maxSales;
                 }
-                else if(maxUser == answer[0] && maxSales > answer[1])
+                else if (maxUser == answer[0] && maxSales > answer[1])
                 {
                     answer[1] = maxSales;
                 }
@@ -2587,6 +2587,131 @@ public class Programers_Level_2
                 current.RemoveAt(current.Count - 1);
             }
         }
+    }
 
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181187
+    public class s181187
+    {
+        public long solution(int r1, int r2)
+        {
+            long answer = 0;
+
+            for (int i = -r2; i <= r2; i++)
+            {
+                int maxY = (int)Math.Sqrt((long)r2 * r2 - (long)i * i);
+                int yCount = (maxY * 2) + 1;
+
+                answer += yCount;
+            }
+
+            for (int i = -r1; i <= r1; i++)
+            {
+                double value = Math.Sqrt((long)r1 * r1 - (long)i * i);
+                int maxY = 0;
+
+                if (value % 1 != 0)
+                {
+                    maxY = (int)value;
+                    answer -= (maxY * 2) + 1;
+                }
+                else
+                {
+                    if (value == 0)
+                        continue;
+
+                    maxY = (int)value - 1;
+                    Console.WriteLine(i);
+                    answer -= (maxY * 2) + 1;
+                }
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/176962
+    public class s176962
+    {
+        public string[] solution(string[,] plans)
+        {
+            List<(string title, DateTime startTime, int duration)> list = new List<(string, DateTime, int)>();
+            Stack<(string title, DateTime startTime, int remainDuration)> pausedTask = new Stack<(string title, DateTime startTime, int remainDuration)>();
+            List<string> answer = new List<string>();
+
+            for (int i = 0; i < plans.GetLength(0); i++)
+            {
+                list.Add((plans[i, 0], DateTime.Parse(plans[i, 1]), int.Parse(plans[i, 2])));
+            }
+
+            list = list.OrderBy(x => x.startTime).ToList();
+
+            DateTime currentTime = DateTime.Parse("00:00");
+            foreach (var item in list)
+            {
+                DateTime startTime = item.startTime;
+
+                while (pausedTask.Count > 0 && startTime >= currentTime)
+                {
+                    var task = pausedTask.Pop();
+                    DateTime taskEndTime = currentTime.AddMinutes(task.remainDuration);
+
+                    if (taskEndTime <= startTime)
+                    {
+                        answer.Add(task.title);
+                        currentTime = taskEndTime;
+                    }
+                    else
+                    {
+                        task.remainDuration -= (int)(startTime - currentTime).TotalMinutes;
+                        pausedTask.Push(task);
+                        break;
+                    }
+                }
+
+                currentTime = startTime;
+                DateTime endTime = startTime.AddMinutes(item.duration);
+
+                pausedTask.Push(item);
+            }
+
+            while (pausedTask.Count > 0)
+            {
+                answer.Add(pausedTask.Pop().title);
+            }
+
+            return answer.ToArray();
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/181188
+    public class s181188
+    {
+        public int solution(int[,] targets)
+        {
+            List<(int start, int end)> list = new List<(int, int)>();
+            int answer = 0;
+
+            for (int i = 0; i < targets.GetLength(0); i++)
+            {
+                list.Add((targets[i, 0], targets[i, 1]));
+            }
+
+            list = list.OrderBy(x => x.end).ToList();
+            int interceptorPos = -1;
+
+            foreach (var v in list)
+            {
+                if (interceptorPos < v.start)
+                {
+                    answer++;
+                    interceptorPos = v.end;
+                }
+            }
+
+            return answer;
+        }
     }
 }
