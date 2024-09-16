@@ -2714,4 +2714,57 @@ public class Programers_Level_2
             return answer;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/160585
+    public class s160585
+    {
+        public int solution(string[] board)
+        {
+            int countO = 0, countX = 0;
+
+            for (int i = 0; i < board.Length; i++)
+            {
+                countO += board[i].Count(x => x.Equals('O'));
+                countX += board[i].Count(x => x.Equals('X'));
+            }
+
+            if (countO < countX || countO > countX + 1)
+                return 0;
+
+            bool winnerO = CheckWinner(board, 'O');
+            bool winnerX = CheckWinner(board, 'X');
+
+            if (winnerO && winnerX)
+                return 0;
+
+            if (winnerO && countO != countX + 1)
+                return 0;
+
+            if (winnerX && countO != countX)
+                return 0;
+
+            return 1;
+        }
+
+        public bool CheckWinner(string[] board, char player)
+        {
+            for (int i = 0; i < board.Length; i++)
+            {
+                if (board[i][0].Equals(player) && board[i][1].Equals(player) && board[i][2].Equals(player))
+                    return true;
+
+                if (board[0][i].Equals(player) && board[1][i].Equals(player) && board[2][i].Equals(player))
+                    return true;
+            }
+
+            if (board[0][0].Equals(player) && board[1][1].Equals(player) && board[2][2].Equals(player))
+                return true;
+
+            if (board[0][2].Equals(player) && board[1][1].Equals(player) && board[2][0].Equals(player))
+                return true;
+
+            return false;
+        }
+    }
 }

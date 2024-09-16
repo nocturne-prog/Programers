@@ -5,14 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s176962 a = new Programers_Level_2.s176962();
+        Programers_Level_2.s160585 a = new Programers_Level_2.s160585();
         var v = a.solution(
-          new string[,] {
-            {"science", "12:40", "50"},
-            {"music", "12:20", "40"},
-            {"history", "14:00", "30"},
-            {"computer", "12:30", "100"}
-          }
+          ["...", ".X.", "..."]
         );
         // PrintArray(v);
         Console.WriteLine(v);
