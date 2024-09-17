@@ -5,9 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s160585 a = new Programers_Level_2.s160585();
+        Programers_Level_2.s131130 a = new Programers_Level_2.s131130();
         var v = a.solution(
-          ["...", ".X.", "..."]
+[8,6,3,7,2,5,1,4]	
         );
         // PrintArray(v);
         Console.WriteLine(v);

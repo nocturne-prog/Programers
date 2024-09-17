@@ -2767,4 +2767,42 @@ public class Programers_Level_2
             return false;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/131130
+    public class s131130
+    {
+        public int solution(int[] cards)
+        {
+            bool[] visited = new bool[cards.Length];
+            List<int> boxSize = new List<int>();
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (visited[i] == false)
+                {
+                    int current = i;
+                    int size = 0;
+
+                    while (visited[current] == false)
+                    {
+                        visited[current] = true;
+                        current = cards[current] - 1;
+                        size++;
+                    }
+
+                    boxSize.Add(size);
+                }
+            }
+
+            boxSize = boxSize.OrderByDescending(x => x).ToList();
+
+            if (boxSize.Count < 2)
+                return 0;
+            else
+                return boxSize[0] * boxSize[1];
+        }
+    }
+
+
 }
