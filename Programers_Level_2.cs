@@ -2805,4 +2805,55 @@ public class Programers_Level_2
     }
 
 
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12952
+    public class s12952
+    {
+        int answer = 0;
+        public int solution(int n)
+        {
+            /*
+            ㅁ ㅁ Q ㅁ
+            Q ㅁ ㅁ ㅁ
+            ㅁ ㅁ ㅁ Q
+            ㅁ Q ㅁ ㅁ 
+            일 때 Q의 위치를 {2,4,1,3} 으로 나타낼 수 있음 (값을 행, 인덱스 번호가 열)
+            가로,세로 겹치지 않도록 -> 인접한 수의 차이가 2이상 나야 한다. 예) {2,4,6,1,3,5} O
+            대각선 겹치지 않도록 -> 임의의 두 수의 차이가 그 수들의 인덱스 차이와 동일하면 안 된다.
+            예) {1,3,5,2,4,6} 은 1과 6의 차이가 5이고 떨어진 거리도 5라서 대각선에서 겹침.
+            */
+
+            int[] board = new int[n];
+            DropQeens(board, 0, n);
+            return answer;
+        }
+
+        private void DropQeens(int[] board, int row, int n)
+        {
+            if (row == n)
+            {
+                answer++;
+                return;
+            }
+
+            for (int col = 0; col < n; col++)
+            {
+                if (IsSafeArea(board, row, col))
+                {
+                    board[row] = col;
+                    DropQeens(board, row + 1, n);
+                }
+            }
+        }
+
+        private bool IsSafeArea(int[] board, int row, int col)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                if (board[i] == col || Math.Abs(board[i] - col) == Math.Abs(i - row))
+                    return false;
+            }
+
+            return true;
+        }
+    }
 }
