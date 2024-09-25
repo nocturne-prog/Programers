@@ -5,12 +5,32 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_2.s12952 a = new Programers_Level_2.s12952();
+        Programers_Level_3.s132266 a = new Programers_Level_3.s132266();
         var v = a.solution(
-            4
+            3,
+            new int[,] {
+                {1,2},
+                {2,3}
+            },
+            [2, 3],
+            1
         );
-        // PrintArray(v);
-        Console.WriteLine(v);
+
+        var v2 = a.solution(
+                        5,
+            new int[,]{
+                    {1, 2},
+                    {1, 4},
+                    {2, 4},
+                    {2, 5},
+                    {4, 5},
+                },
+                    [1, 3, 5], 5
+        );
+
+        PrintArray(v);
+        PrintArray(v2);
+        // Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)
