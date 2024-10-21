@@ -5,32 +5,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_3.s132266 a = new Programers_Level_3.s132266();
+        Programers_Level_3.s12904 a = new Programers_Level_3.s12904();
         var v = a.solution(
-            3,
-            new int[,] {
-                {1,2},
-                {2,3}
-            },
-            [2, 3],
-            1
+            "abacde"
         );
 
-        var v2 = a.solution(
-                        5,
-            new int[,]{
-                    {1, 2},
-                    {1, 4},
-                    {2, 4},
-                    {2, 5},
-                    {4, 5},
-                },
-                    [1, 3, 5], 5
-        );
-
-        PrintArray(v);
-        PrintArray(v2);
-        // Console.WriteLine(v);
+        // PrintArray(v);
+        Console.WriteLine(v);
     }
 
     public static void PrintArray<T>(T[,] array)

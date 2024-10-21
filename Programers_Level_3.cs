@@ -126,4 +126,39 @@ public class Programers_Level_3
             return -1;
         }
     }
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12904
+    public class s12904
+    {
+        public int solution(string s)
+        {
+
+            int answer = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                answer = Math.Max(answer, ExpandAroundCenter(s, i, i));
+            }
+
+
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                answer = Math.Max(answer, ExpandAroundCenter(s, i, i + 1));
+            }
+
+            return answer;
+        }
+
+        private int ExpandAroundCenter(string s, int left, int right)
+        {
+            int length = 0;
+            while (left >= 0 && right < s.Length && s[left] == s[right])
+            {
+                length = right - left + 1;
+                left--;
+                right++;
+            }
+            return length;
+        }
+    }
 }
