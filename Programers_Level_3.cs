@@ -132,7 +132,6 @@ public class Programers_Level_3
     {
         public int solution(string s)
         {
-
             int answer = 0;
 
             for (int i = 0; i < s.Length; i++)
@@ -159,6 +158,39 @@ public class Programers_Level_3
                 right++;
             }
             return length;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/77486
+    public class s77486
+    {
+        public int[] solution(string[] enroll, string[] referral, string[] seller, int[] amount)
+        {
+            Dictionary<string, string> list = new Dictionary<string, string>();
+            Dictionary<string, int> result = new Dictionary<string, int>();
+
+            for (int i = 0; i < enroll.Length; i++)
+            {
+                list.Add(enroll[i], referral[i]);
+                result.Add(enroll[i], 0);
+            }
+
+            for (int i = 0; i < seller.Length; i++)
+            {
+                string name = seller[i];
+                int earnCoin = amount[i] * 100;
+
+                while (name.Equals("-") == false && earnCoin > 0)
+                {
+                    int value = earnCoin / 10;
+                    result[name] += earnCoin - value;
+                    earnCoin = value;
+                    name = list[name];
+                }
+            }
+
+            return result.Values.ToArray();
         }
     }
 }
