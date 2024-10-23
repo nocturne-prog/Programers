@@ -5,12 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_3.s77486 a = new Programers_Level_3.s77486();
+        Programers_Level_3.s68646 a = new Programers_Level_3.s68646();
         var v = a.solution(
-            ["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"],
-        	["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"],
-            ["young", "john", "tod", "emily", "mary"],
-            [12, 4, 2, 5, 10]
+[-16,27,65,-2,58,-92,-71,-68,-61,-33]
         );
 
         // PrintArray(v);

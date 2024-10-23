@@ -193,4 +193,44 @@ public class Programers_Level_3
             return result.Values.ToArray();
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/68646
+    public class s68646
+    {
+        public int solution(int[] a)
+        {
+            int answer = 0;
+
+            if (a.Length < 4)
+                return a.Length;
+
+            int[] leftMin = new int[a.Length];
+            int[] rightMin = new int[a.Length];
+
+            leftMin[0] = a[0];
+            for (int i = 1; i < a.Length; i++)
+            {
+                leftMin[i] = Math.Min(leftMin[i - 1], a[i]);
+            }
+
+            rightMin[a.Length - 1] = a[a.Length - 1];
+            for (int i = a.Length - 2; i >= 0; i--)
+            {
+                rightMin[i] = Math.Min(rightMin[i + 1], a[i]);
+            }
+
+            for (int i = 1; i < a.Length - 1; i++)
+            {
+                if (a[i] > leftMin[i - 1] && a[i] > rightMin[i + 1])
+                {
+                    continue;
+                }
+
+                answer++;
+            }
+
+            return answer + 2;
+        }
+    }
 }
