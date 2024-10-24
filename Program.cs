@@ -5,9 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_3.s68646 a = new Programers_Level_3.s68646();
+        Programers_Level_2.s340212 a = new Programers_Level_2.s340212();
         var v = a.solution(
-[-16,27,65,-2,58,-92,-71,-68,-61,-33]
+[1, 99999, 100000, 99995],	[9999, 9001, 9999, 9001],	3456789012
         );
 
         // PrintArray(v);

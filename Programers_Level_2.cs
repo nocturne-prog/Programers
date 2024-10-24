@@ -2856,4 +2856,53 @@ public class Programers_Level_2
             return true;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/340212
+    public class s340212
+    {
+        public int solution(int[] diffs, int[] times, long limit)
+        {
+            int low = 1;
+            int high = 100000;
+
+            while (low < high)
+            {
+                int mid = (low + high) / 2;
+
+                if (CanSolve(diffs, times, limit, mid))
+                {
+                    high = mid;
+                }
+                else
+                {
+                    low = mid + 1;
+                }
+            }
+
+            return low;
+        }
+
+        public bool CanSolve(int[] diffs, int[] times, long limit, int level)
+        {
+            long totalTime = 0;
+
+            for (int i = 0; i < diffs.Length; i++)
+            {
+                if (level >= diffs[i])
+                {
+                    totalTime += times[i];
+                }
+                else
+                {
+                    totalTime += (times[i - 1] + times[i]) * (diffs[i] - level) + times[i];
+                }
+
+                if (totalTime > limit)
+                    return false;
+            }
+
+            return true;
+        }
+    }
 }
