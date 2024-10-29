@@ -233,4 +233,124 @@ public class Programers_Level_3
             return answer + 2;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/49191
+    public class s49191
+    {
+        public int solution(int n, int[,] results)
+        {
+            int[,] graph = new int[n + 1, n + 1];
+
+            for (int i = 0; i < results.GetLength(0); i++)
+            {
+                int winner = results[i, 0];
+                int loser = results[i, 1];
+
+                graph[winner, loser] = 1;
+                graph[loser, winner] = -1;
+            }
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int m = 1; m <= n; m++)
+                {
+                    for (int h = 1; h <= n; h++)
+                    {
+                        if (graph[m, i] == 1 && graph[i, h] == 1)
+                        {
+                            graph[m, h] = 1;
+                            graph[h, m] = -1;
+                        }
+                    }
+                }
+            }
+
+            int answer = 0;
+
+            for (int i = 1; i <= n; i++)
+            {
+                int count = 0;
+
+                for (int m = 1; m <= n; m++)
+                {
+                    if (graph[i, m] != 0)
+                        count++;
+                }
+
+                if (count == n - 1)
+                {
+                    answer++;
+                }
+            }
+
+            return answer;
+        }
+    }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/152995
+    public class s152995
+    {
+        public int solution(int[,] scores)
+        {
+            List<(int a, int b)> list = new List<(int a, int b)>();
+
+            for (int i = 0; i < scores.GetLength(0); i++)
+            {
+                list.Add((scores[i, 0], scores[i, 1]));
+            }
+
+            int maxPeerReview = 0;
+            var wanho = list[0];
+            int wanhoSum = wanho.a + wanho.b;
+
+            list = list.OrderByDescending(x => x.a).ThenBy(x => x.b).ToList();
+            List<int> sumList = new List<int>();
+
+            foreach (var score in list)
+            {
+                if (score.b < maxPeerReview)
+                {
+                    // if (score == wanho)
+                    if (score.a == wanho.a && score.b == wanho.b)
+                        return -1;
+
+                    continue;
+                }
+
+                sumList.Add(score.a + score.b);
+                maxPeerReview = Math.Max(maxPeerReview, score.b);
+            }
+
+            sumList = sumList.OrderByDescending(x => x).ToList();
+            int rank = 1;
+            int tiedCount = 1;
+
+            for (int i = 0; i < sumList.Count; i++)
+            {
+                if (i != 0)
+                {
+                    if (sumList[i] == sumList[i - 1])
+                    {
+                        tiedCount++;
+                    }
+                    else
+                    {
+                        rank += tiedCount;
+                        tiedCount = 1;
+                    }
+                }
+
+                Console.WriteLine($"index: {i} || value: {sumList[i]} || rank: {rank}");
+
+                if (sumList[i] == wanhoSum)
+                {
+                    return rank;
+                }
+            }
+
+            return rank;
+        }
+    }
 }
