@@ -1337,7 +1337,7 @@ public class Programers_Level_1
     }
 
 
-    //https://school.programmers.co.kr/learn/courses/30/lessons/340213?language=csharp
+    //https://school.programmers.co.kr/learn/courses/30/lessons/340213
     public class s340213
     {
         public string solution(string video_len, string pos, string op_start, string op_end, string[] commands)

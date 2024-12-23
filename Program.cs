@@ -5,10 +5,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_1.s340213 a = new Programers_Level_1.s340213();
-        var v = a.solution(
-"10:55", "00:05", "00:15", "06:55", ["prev", "next", "next"]);
-        Console.WriteLine(v);
+        Programers_Level_2.s12946 a = new Programers_Level_2.s12946();
+        var v = a.solution(4);
+        // Console.WriteLine(v);
+        PrintArray(v);
     }
 
     public static void PrintArray<T>(T[,] array)

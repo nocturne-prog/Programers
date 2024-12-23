@@ -2905,4 +2905,38 @@ public class Programers_Level_2
             return true;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/12946
+    public class s12946
+    {
+        public int[,] solution(int n)
+        {
+            List<(int from, int to)> moves = new List<(int from, int to)>();
+            SolveHanoi(n, 1, 3, 2, moves);
+
+            int[,] answer = new int[moves.Count, 2];
+
+            for (int i = 0; i < moves.Count; i++)
+            {
+                answer[i, 0] = moves[i].from;
+                answer[i, 1] = moves[i].to;
+            }
+
+            return answer;
+        }
+
+        private void SolveHanoi(int n, int from, int to, int via, List<(int from, int to)> moves)
+        {
+            if (n == 1)
+            {
+                moves.Add((from, to));
+                return;
+            }
+
+            SolveHanoi(n - 1, from, via, to, moves);
+            moves.Add((from, to));
+            SolveHanoi(n - 1, via, to, from, moves);
+        }
+    }
 }
