@@ -1335,4 +1335,59 @@ public class Programers_Level_1
 
         return answerList.Values.Max();
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/340213?language=csharp
+    public class s340213
+    {
+        public string solution(string video_len, string pos, string op_start, string op_end, string[] commands)
+        {
+            int videoLen = TickToText(video_len);
+            int opStart = TickToText(op_start);
+            int opEnd = TickToText(op_end);
+            int current = TickToText(pos);
+
+            for (int i = 0; i < commands.Length; i++)
+            {
+                string c = commands[i];
+
+                if (current >= opStart && current <= opEnd)
+                    current = opEnd;
+
+                if (c.Equals("next"))
+                {
+                    current += 10;
+
+                    if (current > videoLen)
+                        current = videoLen;
+                }
+                else if (c.Equals("prev"))
+                {
+                    current -= 10;
+
+                    if (current < 0)
+                        current = 0;
+                }
+
+                if (current >= opStart && current <= opEnd)
+                    current = opEnd;
+            }
+
+            return TextToTick(current);
+        }
+
+        public string TextToTick(int tick)
+        {
+            return $"{(tick / 60).ToString("D2")}:{(tick % 60).ToString("D2")}";
+        }
+
+        public int TickToText(string text)
+        {
+            string[] split = text.Split(':');
+            int mim = int.Parse(split[0]);
+            int second = int.Parse(split[1]);
+
+            return (mim * 60) + second;
+        }
+    }
 }

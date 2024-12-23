@@ -5,17 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Programers_Level_3.s152995 a = new Programers_Level_3.s152995();
+        Programers_Level_1.s340213 a = new Programers_Level_1.s340213();
         var v = a.solution(
-    new int[,]
-        {
-            {100, 2},
-            {100, 1},
-            {50, 1},
-        }
-        );
-
-        // PrintArray(v);
+"10:55", "00:05", "00:15", "06:55", ["prev", "next", "next"]);
         Console.WriteLine(v);
     }
 

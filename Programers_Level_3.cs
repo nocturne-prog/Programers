@@ -353,4 +353,32 @@ public class Programers_Level_3
             return rank;
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/92343
+    public class s92343
+    {
+        public int solution(int[] info, int[,] edges)
+        {
+            Dictionary<int, (int, List<int>)> route = new Dictionary<int, (int, List<int>)>();
+
+            for (int i = 0; i < info.Length; i++)
+            {
+                route.Add(i, (info[i], new List<int>()));
+            }
+
+            for (int i = 0; i < edges.GetLength(0); i++)
+            {
+                int parent = edges[i, 0];
+                int child = edges[i, 1];
+
+                route[parent].Item2.Add(child);
+            }
+
+
+
+            int answer = 0;
+            return answer;
+        }
+    }
 }
