@@ -2939,4 +2939,33 @@ public class Programers_Level_2
             SolveHanoi(n - 1, via, to, from, moves);
         }
     }
+
+
+    //https://school.programmers.co.kr/learn/courses/30/lessons/42860
+    public class s42860
+    {
+        public int solution(string name)
+        {
+            int n = name.Length;
+            int minMove = n - 1;
+            int total = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                char target = name[i];
+                total += Math.Min(target - 'A', 'Z' - target + 1);
+
+                int next = i + 1;
+                while (next < n && name[next] == 'A') next++;
+                minMove = Math.Min(minMove, i + n - next + Math.Min(i, n - next));
+            }
+
+            return total + minMove;
+        }
+
+        public int GetCount(char target)
+        {
+            return Math.Min(target - 'A', 'Z' - target + 1);
+        }
+    }
 }
